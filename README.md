@@ -1,4 +1,4 @@
-#ClinicQueue App
+# ClinicQueue App
 
 The Clinic Queue & Appointment Manager is a lightweight application designed to help community clinics and small healthcare practices reduce waiting times and improve patient flow management. The system enables patients to book, reschedule, or cancel appointments, while clinic staff can manage daily queues, check in patients, and monitor real-time updates.
 
