@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\ClinicQueue.Api.csproj": {}
+    "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\tests\\ClinicQueue.UnitTests\\ClinicQueue.UnitTests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\ClinicQueue.Api.csproj": {
+    "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\tests\\ClinicQueue.UnitTests\\ClinicQueue.UnitTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\ClinicQueue.Api.csproj",
-        "projectName": "ClinicQueue.Api",
-        "projectPath": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\ClinicQueue.Api.csproj",
+        "projectUniqueName": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\tests\\ClinicQueue.UnitTests\\ClinicQueue.UnitTests.csproj",
+        "projectName": "ClinicQueue.UnitTests",
+        "projectPath": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\tests\\ClinicQueue.UnitTests\\ClinicQueue.UnitTests.csproj",
         "packagesPath": "C:\\Users\\NWUUSER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\obj\\",
+        "outputPath": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\tests\\ClinicQueue.UnitTests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\NWUUSER\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -43,31 +43,21 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.AspNetCore.OpenApi": {
+            "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[8.0.20, )"
+              "version": "[17.8.0, )"
             },
-            "Microsoft.AspNetCore.SignalR": {
+            "coverlet.collector": {
               "target": "Package",
-              "version": "[1.2.0, )"
+              "version": "[6.0.0, )"
             },
-            "Microsoft.EntityFrameworkCore": {
+            "xunit": {
               "target": "Package",
-              "version": "[9.0.9, )"
+              "version": "[2.5.3, )"
             },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
+            "xunit.runner.visualstudio": {
               "target": "Package",
-              "version": "[9.0.9, )"
-            },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
-              "target": "Package",
-              "version": "[9.0.9, )"
-            },
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[6.6.2, )"
+              "version": "[2.5.3, )"
             }
           },
           "imports": [
@@ -82,9 +72,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
