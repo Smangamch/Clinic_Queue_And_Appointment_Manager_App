@@ -1,4 +1,5 @@
 public class Appointment{
+// We create propeties for the required entities for an appointment
     public Guid Id { get; set; } = Guid.NewGuid();
     public string PatientName { get; set; } = Null!;
     public PatientContact { get; set; } null!;
