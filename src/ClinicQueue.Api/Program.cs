@@ -1,18 +1,19 @@
-using EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ClinicQueue.Infrastructure;
+using Microsoft.AspNetCore.Builder;
 
-var builder = WebApplications.CreateBuilder();
+var builder = WebApplication.CreateBuilder();
 
 
 // Configure the database context to use SQLite by registering the ApplicationDbContext with the dependency injection container
 builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseSQlite(
+    options => options.UseSqlite(
         builder.Configuration.GetConnectionString("DefaultConnection")
         ?? "Data Source=clinicqueue.db"
     )
 );
 
-//Add services to the container
+// Add services to the container
 builder.Services.AddControllers();
 
 var app = builder.Build();

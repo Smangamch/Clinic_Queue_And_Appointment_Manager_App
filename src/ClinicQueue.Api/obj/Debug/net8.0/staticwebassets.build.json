@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "veoGNpDwwxhqpfvJjhxdG/0ywAYg3q0XROLYTYSSKZI=",
+  "Source": "ClinicQueue.Api",
+  "BasePath": "_content/ClinicQueue.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

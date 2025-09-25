@@ -4,7 +4,7 @@ using ClinicQueue.Domain.Entities;
 // The ApplicationDbContext class inherits from the DbContext class provided by Entity Framework Core,
 // It acts as bridge between the C# domain models (which is Appointment in this case) and the underlying database
 // In this class, It inherits from the DBContext which provides the necessary functionality to interact with the database
-public class ApplicationDbContext : DBContext{
+public class ApplicationDbContext : DbContext{
 
     // A constructor for the DBContextOptions to be passed in and forwarded to the base DBContext class
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {}

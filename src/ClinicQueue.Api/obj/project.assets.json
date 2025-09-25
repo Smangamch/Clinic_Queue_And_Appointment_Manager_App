@@ -1773,6 +1773,31 @@
         "build": {
           "buildTransitive/net6.0/_._": {}
         }
+      },
+      "ClinicQueue.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/ClinicQueue.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ClinicQueue.Domain.dll": {}
+        }
+      },
+      "ClinicQueue.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "ClinicQueue.Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "9.0.9",
+          "Microsoft.EntityFrameworkCore.Sqlite": "9.0.9"
+        },
+        "compile": {
+          "bin/placeholder/ClinicQueue.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ClinicQueue.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -4742,10 +4767,21 @@
         "system.threading.channels.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "ClinicQueue.Domain/1.0.0": {
+      "type": "project",
+      "path": "../ClinicQueue.Domain/ClinicQueue.Domain.csproj",
+      "msbuildProject": "../ClinicQueue.Domain/ClinicQueue.Domain.csproj"
+    },
+    "ClinicQueue.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../ClinicQueue.Infrastructure/ClinicQueue.Infrastructure.csproj",
+      "msbuildProject": "../ClinicQueue.Infrastructure/ClinicQueue.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "ClinicQueue.Infrastructure >= 1.0.0",
       "Microsoft.AspNetCore.OpenApi >= 8.0.20",
       "Microsoft.AspNetCore.SignalR >= 1.2.0",
       "Microsoft.EntityFrameworkCore >= 9.0.9",
@@ -4779,7 +4815,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Infrastructure\\ClinicQueue.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Infrastructure\\ClinicQueue.Infrastructure.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
