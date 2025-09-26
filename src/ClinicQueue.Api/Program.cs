@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder();
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlite(
         builder.Configuration.GetConnectionString("DefaultConnection")
-        ?? "Data Source=clinicqueue.db"
+        ?? "Data Source=clinicqueue.db" // Fallback connection string if not found in configuration
     )
 );
 
@@ -21,3 +21,4 @@ var app = builder.Build();
 // Configure the HTTP request pipeline for the application
 app.UseAuthorization();
 app.MapControllers();
+app.Run();

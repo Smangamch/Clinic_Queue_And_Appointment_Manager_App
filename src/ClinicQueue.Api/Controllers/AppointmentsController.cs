@@ -11,8 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using ClinicQueue.Domain.Entities;
 using ClinicQueue.Api.DTOs;
 
-namespace ClinicQueue.Api.Controllers;
-
+namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
 {
     // This is the REST API controller which inherits from the ControllerBase
     [ApiController]
@@ -51,13 +50,13 @@ namespace ClinicQueue.Api.Controllers;
             _context.Appointments.Add(appointment);
             await _context.SaveChangesAsync();
 
-            return CreatedAction(nameof(GetAppointmentById), 
-            new { id = appointment.Id }, appointment);
+            return CreatedAtAction(nameof(GetAppointmentById), // Fixed method name
+                new { id = appointment.Id }, appointment);
 
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult> GetAppointmentById(Guid id)
+        public async Task<ActionResult<Appointment>> GetAppointmentById(Guid id) // Added generic type
         {
             //Lookup the appointment by its ID in the database
             var appointment = await _context.Appointments.FindAsync(id);
