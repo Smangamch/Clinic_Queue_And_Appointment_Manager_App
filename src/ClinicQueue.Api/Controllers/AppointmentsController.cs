@@ -55,6 +55,7 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
 
         }
 
+        // Retrieves an appointment by its ID, returning 200 with data or 404 if not found.
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<Appointment>> GetAppointmentById(Guid id) // Added generic type
         {
@@ -66,7 +67,15 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
                 return NotFound();
             }
 
-            return Ok(appointment); // Returns the 200 status code with the appointment data
+            return Ok(appointment); 
+        }
+
+        // Handles GET /api/appointments: retrieves all appointments, returns 200 with list.
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAllAppointments() // Added generic type
+        {
+            var appointments = await _context.Appointments.ToListAsync();
+            return Ok(appointments); 
         }
     }
 }
