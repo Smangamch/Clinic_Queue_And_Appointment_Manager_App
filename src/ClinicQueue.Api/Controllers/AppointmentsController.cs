@@ -102,7 +102,8 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteAppointment(Guid id){
+        public async Task<IActionResult> DeleteAppointment(Guid id)
+        {
             var appointment = await _context.Appointments.FindAsync(id);
 
             if(appointment == null)
@@ -110,6 +111,8 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
 
             _context.Appointments.Remove(appointment);
             await _context.SaveChangesAsync();
+
+            Console.WriteLine($"Appointment with ID {id} has been deleted.");
 
             return NoContent(); 
 
