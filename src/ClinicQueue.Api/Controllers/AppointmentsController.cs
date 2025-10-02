@@ -77,6 +77,43 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
             var appointments = await _context.Appointments.ToListAsync();
             return Ok(appointments); 
         }
+
+        // Updates an existing appointment, validates future time, returns 204 or 404 if not found.
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult> UpdateAppointment(Guid id, [FromBody] UpdateAppointmentDto dto)
+        {
+            var appointment = await _context.Appointments.FindAsync(id);
+
+            if(appointment == null)
+                return NotFound();
+
+            if(dto.ScheduledAt <= DateTime.UtcNow)
+                return BadRequest("Appointment time must be in the future.");
+
+            // Update the appointment details
+            appointment.PatientName = dto.PatientName;
+            appointment.PatientContact = dto.PatientContact;
+            appointment.ScheduledAt = dto.ScheduledAt;
+            appointment.ClinicId = dto.ClinicId;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent(); // 204 No Content
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteAppointment(Guid id){
+            var appointment = await _context.Appointments.FindAsync(id);
+
+            if(appointment == null)
+                return NotFound();
+
+            _context.Appointments.Remove(appointment);
+            await _context.SaveChangesAsync();
+
+            return NoContent(); 
+
+        }
     }
 }
 
