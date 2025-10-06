@@ -101,6 +101,7 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
             return NoContent(); // 204 No Content
         }
 
+        // Deletes an appointment by ID, returning 204 if successful or 404 if not found.
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteAppointment(Guid id)
         {
@@ -109,13 +110,27 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
             if(appointment == null)
                 return NotFound();
 
-            _context.Appointments.Remove(appointment);
+            _context.Appointments.Remove(appointment); // Remove the appointment from the database
             await _context.SaveChangesAsync();
 
             Console.WriteLine($"Appointment with ID {id} has been deleted.");
 
             return NoContent(); 
 
+        }
+
+        // This endpoint filters appointments by clinic ID, returning 200 with list or 404 if none found.
+        [HttpGet("clinic/{clinicId}")]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointmentsByClinic(string clinicId)
+        {
+            var appointments = await _context.Appointments
+                .Where(a => a.ClinicId == clinicId)
+                .ToListAsync();
+
+            if(appointments == null || !appointments.Any())
+                return NotFound($"No appointments found for clinic ID {clinicId}.");
+
+            return Ok(appointments);
         }
     }
 }

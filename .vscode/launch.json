@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "ClinicQueue API (Debug)",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/ClinicQueue.Api/bin/Debug/net8.0/ClinicQueue.Api.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/ClinicQueue.Api",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/src/ClinicQueue.Api/Views"
+      },
+       "checkForDevCert": false
+    }
+  ]
+}
