@@ -9,4 +9,5 @@ public class Appointment
     public DateTime ScheduledAt { get; set; }
     public bool CheckedIn { get; set; }
     public string ClinicId { get; set; } = null!;
+    public string Status { get; set; } = "Pending"; // Default status when created"
 }

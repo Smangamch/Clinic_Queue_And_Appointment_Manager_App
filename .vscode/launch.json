@@ -1,6 +1,7 @@
 {
   "version": "0.2.0",
   "configurations": [
+
     {
       "name": "ClinicQueue API (Debug)",
       "type": "coreclr",
@@ -19,7 +20,8 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/src/ClinicQueue.Api/Views"
       },
-       "checkForDevCert": false
+       "checkForDevCert": false,
+       "requireExactSource": false
     }
   ]
 }

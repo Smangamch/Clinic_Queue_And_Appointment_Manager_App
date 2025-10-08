@@ -1,11 +1,6 @@
 /// <summary>
 /// Represents the API controller for managing appointments in the Clinic Queue system.
 /// </summary>
-/// <remarks>
-/// This controller provides endpoints for creating, retrieving, updating, and deleting 
-/// appointment records. It interacts with the application's database context to perform 
-/// CRUD operations on appointment entities.
-/// </remarks>
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ClinicQueue.Domain.Entities;
@@ -32,11 +27,11 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
         public async Task<IActionResult> CreateAppointment([FromBody] CreateAppointmentDto dto)
         {
             // This condition validates that the appointment time is in the future
-            if(dto.ScheduledAt <= DateTime.UtcNow)
+            if (dto.ScheduledAt <= DateTime.UtcNow)
             {
                 return BadRequest("Appointment time must be in the future.");
             }
-        
+
             // Create a new appointment entity from the DTO
             var appointment = new Appointment
             {
@@ -62,12 +57,12 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
             //Lookup the appointment by its ID in the database
             var appointment = await _context.Appointments.FindAsync(id);
 
-            if(appointment == null)
+            if (appointment == null)
             {
                 return NotFound();
             }
 
-            return Ok(appointment); 
+            return Ok(appointment);
         }
 
         // Handles GET /api/appointments: retrieves all appointments, returns 200 with list.
@@ -75,7 +70,7 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAllAppointments() // Added generic type
         {
             var appointments = await _context.Appointments.ToListAsync();
-            return Ok(appointments); 
+            return Ok(appointments);
         }
 
         // Updates an existing appointment, validates future time, returns 204 or 404 if not found.
@@ -84,10 +79,10 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
         {
             var appointment = await _context.Appointments.FindAsync(id);
 
-            if(appointment == null)
+            if (appointment == null)
                 return NotFound();
 
-            if(dto.ScheduledAt <= DateTime.UtcNow)
+            if (dto.ScheduledAt <= DateTime.UtcNow)
                 return BadRequest("Appointment time must be in the future.");
 
             // Update the appointment details
@@ -107,7 +102,7 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
         {
             var appointment = await _context.Appointments.FindAsync(id);
 
-            if(appointment == null)
+            if (appointment == null)
                 return NotFound();
 
             _context.Appointments.Remove(appointment); // Remove the appointment from the database
@@ -115,7 +110,7 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
 
             Console.WriteLine($"Appointment with ID {id} has been deleted.");
 
-            return NoContent(); 
+            return NoContent();
 
         }
 
@@ -127,10 +122,25 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
                 .Where(a => a.ClinicId == clinicId)
                 .ToListAsync();
 
-            if(appointments == null || !appointments.Any())
+            if (appointments == null || !appointments.Any())
                 return NotFound($"No appointments found for clinic ID {clinicId}.");
 
             return Ok(appointments);
+        }
+
+        [HttpPut("{id:guid}/status")]
+        // Updates the status of an appointment, returning 200 with confirmation or 404 if not found.
+        public async Task<IActionResult> UpdateAppointmentStatus(Guid id, [FromBody] string status)
+        {
+            var appointment = await _context.Appointments.FindAsync(id);
+
+            if (appointment == null)
+                return NotFound();
+
+            appointment.Status = status;
+            await _context.SaveChangesAsync();
+
+            return Ok($"Appointment status updated to {status}.");
         }
     }
 }
