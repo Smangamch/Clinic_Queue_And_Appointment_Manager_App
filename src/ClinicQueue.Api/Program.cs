@@ -15,10 +15,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 
 // Add services to the container
 builder.Services.AddControllers();
+builder.Services.AddMemoryCache();
+
+
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline for the application
 app.UseAuthorization();
 app.MapControllers();
+app.UseHttpsRedirection();
 app.Run();

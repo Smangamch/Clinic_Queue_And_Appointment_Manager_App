@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ClinicQueue.Domain.Entities;
 using ClinicQueue.Api.DTOs;
+using Microsoft.Extensions.Caching.Memory; 
 
 namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
 {
@@ -16,11 +17,13 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
     {
         // Declares a readonly field to hold the database context for consistent CRUD operations on appointments.
         private readonly ApplicationDbContext _context;
+        private readonly IMemoryCache _cache; // Memory cache for caching appointment data
 
         // Constructor that accepts the database context via dependency injection and assigns it to the readonly field.
-        public AppointmentsController(ApplicationDbContext context)
+        public AppointmentsController(ApplicationDbContext context, IMemoryCache cache)
         {
             _context = context;
+            _cache = cache;
         }
         // Handles POST /api/appointments: validates future appointment time, creates and saves an appointment, returns 201 with resource URI.
         [HttpPost]
@@ -123,7 +126,7 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
                 .ToListAsync();
 
             if (appointments == null || !appointments.Any())
-                return NotFound($"No appointments found for clinic ID {clinicId}.");
+                return NotFound($"\nNo appointments found for clinic ID {clinicId}.");
 
             return Ok(appointments);
         }
@@ -140,7 +143,31 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
             appointment.Status = status;
             await _context.SaveChangesAsync();
 
-            return Ok($"Appointment status updated to {status}.");
+            return Ok($"\nAppointment status updated to {status}.");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
+        {
+            const string cacheKey = "appointments_cache";
+            // This condition tries to retrieve from the cache first
+            if (_cache.TryGetValue(cacheKey, out List<Appointment>? cachedAppointments))
+            {
+                Console.WriteLine("Returning appointments from cache...");
+                return Ok(cachedAppointments);
+            }
+
+            // If not cached, then we fetch from the database
+            var appointments = await _context.Appointments.ToListAsync();
+
+            // Cache the results for 1 minute
+            var cacheOptions = new MemoryCacheEntryOptions()
+                .SetSlidingExpiration(TimeSpan.FromMinutes(1));
+
+            _cache.Set(cacheKey, appointments, cacheOptions);
+
+            Console.WriteLine("Caching appointments result...");
+            return Ok(appointments);
         }
     }
 }
