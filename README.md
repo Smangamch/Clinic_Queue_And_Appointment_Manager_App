@@ -24,3 +24,25 @@ From a development perspective, this project serves as a hands-on exploration of
 ### Perfomance Optimization
 * In-Memory Caching - Reduces database queries for frequently accessed appointment data.
 * Lightweight Storage - Uses SQLite for a simple, file-based, and portable database but I have also added **MySQL** package to the project for later migration
+
+## How to run the project
+### Prerequisites
+The following need to be installed in your machine:
+* .NET 8 SDK: https://dotnet.microsoft.com/en-us/download
+* SQLite: https://www.sqlite.org/download.html
+* POSTMAN (Optional) - https://www.postman.com/downloads/
+* Gitbash, but you can also use terminal provided in VS code
+
+### Setup instructions
+1. Clone the repository
+   * git clone https://github.com/<your-username>/ClinicQueue.git
+   * cd ClinicQueue
+2. Restore dependencies
+   * dotnet restore
+3. Apply migrations
+   * dotnet ef database migrate
+4. Run the application
+   * dotnet run --project src/ClinicQueue.Api
+5. Access the API
+   * https://localhost:5188/swagger
+
