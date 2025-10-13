@@ -31,7 +31,7 @@ The following need to be installed in your machine:
 * .NET 8 SDK: https://dotnet.microsoft.com/en-us/download
 * SQLite: https://www.sqlite.org/download.html
 * POSTMAN (Optional) - https://www.postman.com/downloads/
-* Gitbash, but you can also use terminal provided in VS code
+* Gitbash, but you can also use terminal provided in **Visual Studio Code**
 
 ### Setup instructions
 1. Clone the repository
