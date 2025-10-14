@@ -28,6 +28,29 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Global exception handling middleware to catch unhandled exceptions and return a JSON error response
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next();
+    }
+    catch (Exception ex)
+    {
+        context.Response.StatusCode = 500;
+        context.Response.ContentType = "application/json";
+
+        var errorResponse = new
+        {
+            message = "An unexpected error occurred.",
+            detail = ex.Message
+        };
+
+        var jsonResponse = System.Text.Json.JsonSerializer.Serialize(errorResponse);
+        await context.Response.WriteAsync(jsonResponse);
+    }
+});
+
 // Configure the HTTP request pipeline for the application
 app.UseAuthorization();
 app.MapControllers();

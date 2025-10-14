@@ -17,14 +17,17 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
     {
         // Declares a readonly field to hold the database context for consistent CRUD operations on appointments.
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<AppointmentsController> _logger; // Logger for logging information and errors
         private readonly IMemoryCache _cache; // Memory cache for caching appointment data
 
         // Constructor that accepts the database context via dependency injection and assigns it to the readonly field.
-        public AppointmentsController(ApplicationDbContext context, IMemoryCache cache)
+        public AppointmentsController(ApplicationDbContext context, IMemoryCache cache, ILogger<AppointmentsController> logger)
         {
             _context = context;
             _cache = cache;
+            _logger = logger;
         }
+
         // Handles POST /api/appointments: validates future appointment time, creates and saves an appointment, returns 201 with resource URI.
         [HttpPost]
         public async Task<IActionResult> CreateAppointment([FromBody] CreateAppointmentDto dto)
@@ -59,6 +62,7 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
         {
             //Lookup the appointment by its ID in the database
             var appointment = await _context.Appointments.FindAsync(id);
+            _logger.LogInformation($"Fetching appointment with ID: {id}");
 
             if (appointment == null)
             {
@@ -81,6 +85,7 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
         public async Task<ActionResult> UpdateAppointment(Guid id, [FromBody] UpdateAppointmentDto dto)
         {
             var appointment = await _context.Appointments.FindAsync(id);
+            _logger.LogInformation($"Updating appointment with ID: {id}");
 
             if (appointment == null)
                 return NotFound();
@@ -95,6 +100,7 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
             appointment.ClinicId = dto.ClinicId;
 
             await _context.SaveChangesAsync();
+            _logger.LogInformation($"Appointment with ID: {id} has been updated.");
 
             return NoContent(); // 204 No Content
         }
@@ -104,14 +110,14 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
         public async Task<IActionResult> DeleteAppointment(Guid id)
         {
             var appointment = await _context.Appointments.FindAsync(id);
+            _logger.LogInformation($"Deleting appointment with ID: {id}");
 
             if (appointment == null)
                 return NotFound();
 
             _context.Appointments.Remove(appointment); // Remove the appointment from the database
             await _context.SaveChangesAsync();
-
-            Console.WriteLine($"Appointment with ID {id} has been deleted.");
+            _logger.LogInformation($"Appointment with ID: {id} has been deleted.");
 
             return NoContent();
 
@@ -136,17 +142,20 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
         public async Task<IActionResult> UpdateAppointmentStatus(Guid id, [FromBody] string status)
         {
             var appointment = await _context.Appointments.FindAsync(id);
+            _logger.LogInformation($"Updating status of appointment with ID: {id} to {status}");
 
             if (appointment == null)
                 return NotFound();
 
             appointment.Status = status;
             await _context.SaveChangesAsync();
+            _logger.LogInformation($"Appointment with ID: {id} status updated to {status}");
 
             return Ok($"\nAppointment status updated to {status}.");
         }
 
         [HttpGet]
+        // This endpoint caches frequently used data for faster retrieval and returns those values
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
         {
             const string cacheKey = "appointments_cache";
@@ -198,6 +207,8 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
             return Ok(pagedAppointments);
 
         }
+
+
     }
 }
 
