@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Domain\\ClinicQueue.Domain.csproj": {}
+    "C:\\Users\\NWUUSER\\Clinic_queue_And_Appointment_Manager_App\\src\\ClinicQueue.Domain\\ClinicQueue.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Domain\\ClinicQueue.Domain.csproj": {
+    "C:\\Users\\NWUUSER\\Clinic_queue_And_Appointment_Manager_App\\src\\ClinicQueue.Domain\\ClinicQueue.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Domain\\ClinicQueue.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\NWUUSER\\Clinic_queue_And_Appointment_Manager_App\\src\\ClinicQueue.Domain\\ClinicQueue.Domain.csproj",
         "projectName": "ClinicQueue.Domain",
-        "projectPath": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Domain\\ClinicQueue.Domain.csproj",
+        "projectPath": "C:\\Users\\NWUUSER\\Clinic_queue_And_Appointment_Manager_App\\src\\ClinicQueue.Domain\\ClinicQueue.Domain.csproj",
         "packagesPath": "C:\\Users\\NWUUSER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Domain\\obj\\",
+        "outputPath": "C:\\Users\\NWUUSER\\Clinic_queue_And_Appointment_Manager_App\\src\\ClinicQueue.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\NWUUSER\\AppData\\Roaming\\NuGet\\NuGet.Config"

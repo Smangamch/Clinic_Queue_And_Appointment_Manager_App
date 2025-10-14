@@ -169,6 +169,35 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
             Console.WriteLine("Caching appointments result...");
             return Ok(appointments);
         }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Appointment>>> SearchAppointments(
+            [FromQuery] string? query,
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10)
+
+        {
+            // Start with all appointments
+            var appointments = _context.Appointments.AsQueryable();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                // Filter by patient name or contact containing the query string
+                appointments = appointments.Where(a =>
+                    a.PatientName.Contains(query) ||
+                    a.PatientContact.Contains(query));
+            }
+
+            // Apply pagination and ordering
+            var pagedAppointments = await appointments
+                .OrderBy(a => a.ScheduledAt)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return Ok(pagedAppointments);
+
+        }
     }
 }
 

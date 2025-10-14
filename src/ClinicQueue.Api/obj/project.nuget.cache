@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gdpMDSXYwIk=",
+  "dgSpecHash": "oSBnRz4Yq3Q=",
   "success": true,
-  "projectFilePath": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\ClinicQueue.Api.csproj",
+  "projectFilePath": "C:\\Users\\NWUUSER\\Clinic_queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\ClinicQueue.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\NWUUSER\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\NWUUSER\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.3.0\\microsoft.aspnetcore.authentication.abstractions.2.3.0.nupkg.sha512",
