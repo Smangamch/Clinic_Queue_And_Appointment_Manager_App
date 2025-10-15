@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0dzQE9SOE5c=",
+  "dgSpecHash": "sTabSIIhgMc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\NWUUSER\\Clinic_queue_And_Appointment_Manager_App\\src\\ClinicQueue.Infrastructure\\ClinicQueue.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Infrastructure\\ClinicQueue.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\NWUUSER\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\NWUUSER\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",

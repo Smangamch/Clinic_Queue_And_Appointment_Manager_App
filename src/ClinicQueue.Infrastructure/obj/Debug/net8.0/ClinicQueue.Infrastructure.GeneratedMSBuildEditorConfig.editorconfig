@@ -16,6 +16,6 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ClinicQueue.Infrastructure
-build_property.ProjectDir = C:\Users\NWUUSER\Clinic_queue_And_Appointment_Manager_App\src\ClinicQueue.Infrastructure\
+build_property.ProjectDir = C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Infrastructure\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ClinicQueue.Domain
-build_property.ProjectDir = C:\Users\NWUUSER\Clinic_queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\
+build_property.ProjectDir = C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

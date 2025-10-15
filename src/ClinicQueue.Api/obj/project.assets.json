@@ -4797,11 +4797,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\NWUUSER\\Clinic_queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\ClinicQueue.Api.csproj",
+      "projectUniqueName": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\ClinicQueue.Api.csproj",
       "projectName": "ClinicQueue.Api",
-      "projectPath": "C:\\Users\\NWUUSER\\Clinic_queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\ClinicQueue.Api.csproj",
+      "projectPath": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\ClinicQueue.Api.csproj",
       "packagesPath": "C:\\Users\\NWUUSER\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\NWUUSER\\Clinic_queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\obj\\",
+      "outputPath": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\NWUUSER\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -4816,8 +4816,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\NWUUSER\\Clinic_queue_And_Appointment_Manager_App\\src\\ClinicQueue.Infrastructure\\ClinicQueue.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\NWUUSER\\Clinic_queue_And_Appointment_Manager_App\\src\\ClinicQueue.Infrastructure\\ClinicQueue.Infrastructure.csproj"
+            "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Infrastructure\\ClinicQueue.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\NWUUSER\\Clinic_Queue_And_Appointment_Manager_App\\src\\ClinicQueue.Infrastructure\\ClinicQueue.Infrastructure.csproj"
             }
           }
         }
