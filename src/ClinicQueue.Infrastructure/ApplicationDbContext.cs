@@ -18,6 +18,4 @@ public class ApplicationDbContext : DbContext{
             .HasIndex(appointment => new { appointment.ClinicId, appointment.ScheduledAt })
             .IsUnique();
     }
-
-
 }

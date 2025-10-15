@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4B021F25
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicQueue.UnitTests", "tests\ClinicQueue.UnitTests\ClinicQueue.UnitTests.csproj", "{998CA78D-AE1A-445D-BCD3-D2693A63E968}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicQueue.Tests", "ClinicQueue.Tests\ClinicQueue.Tests.csproj", "{4CCFD714-6B7B-4991-A8E2-87A117D15409}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{998CA78D-AE1A-445D-BCD3-D2693A63E968}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{998CA78D-AE1A-445D-BCD3-D2693A63E968}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{998CA78D-AE1A-445D-BCD3-D2693A63E968}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CCFD714-6B7B-4991-A8E2-87A117D15409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CCFD714-6B7B-4991-A8E2-87A117D15409}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CCFD714-6B7B-4991-A8E2-87A117D15409}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CCFD714-6B7B-4991-A8E2-87A117D15409}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{06FA1DAD-41EA-4ABB-98EF-9D9A43A97986} = {712F4FEB-BF54-4EB4-B50B-B0B80D6DA2A4}
