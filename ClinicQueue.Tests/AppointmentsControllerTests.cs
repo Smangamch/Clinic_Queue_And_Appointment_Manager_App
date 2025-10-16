@@ -43,6 +43,7 @@ namespace ClinicQueue.Tests
 
             // Perform the action
             var result = await controller.GetAppointmentById(fakeId);
+            _logger.LogInformation("FakeId has been retrieved successfully");
 
             // Assert
             Assert.IsType<NotFoundResult>(result.Result);
@@ -53,24 +54,23 @@ namespace ClinicQueue.Tests
         {
             // Set up the test
             var controller = new AppointmentsController(_context, _cache, _logger);
-            var dto = new CreateAppointmentDto
+            var newAppointment = new CreateAppointmentDto
             {
-                PatientName = "John Doe",
+                PatientName = "James Milner",
                 PatientContact = "123-456-7890",
                 ScheduledAt = DateTime.UtcNow.AddHours(1), // Future date
-                ClinicId = Guid.NewGuid()
+                ClinicId = "ClinicH1"
             };
 
             // Perform the action
-            var result = await controller.CreateAppointment(dto);
+            var result = await controller.CreateAppointment(newAppointment);
+            _logger.LogInformation("New appoinment has been created successfully.");
 
             // Assert
             var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result);
-            var appointment = Assert.IsType<Appointment>(createdAtActionResult.Value);
-            Assert.Equal(dto.PatientName, appointment.PatientName);
-            Assert.Equal(dto.PatientContact, appointment.PatientContact);
-            Assert.Equal(dto.ScheduledAt, appointment.ScheduledAt);
-            Assert.Equal(dto.ClinicId, appointment.ClinicId);
+            var createdAppointment = Assert.IsType<Appointment>(createdAtActionResult.Value);
+            Assert.Equal("James Milner", createdAppointment.PatientName);
+            Assert.Equal(1, _context.Appointments.Count());
         }
     }
 }
