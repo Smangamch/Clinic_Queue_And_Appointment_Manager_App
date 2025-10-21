@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using ClinicQueue.Api.DTOs;
+using SQLitePCL;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace ClinicQueue.Tests
 {
@@ -64,13 +66,40 @@ namespace ClinicQueue.Tests
 
             // Perform the action
             var result = await controller.CreateAppointment(newAppointment);
-            _logger.LogInformation("New appoinment has been created successfully.");
+            _logger.LogInformation("New appointment has been created successfully.");
 
             // Assert
             var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result);
             var createdAppointment = Assert.IsType<Appointment>(createdAtActionResult.Value);
             Assert.Equal("James Milner", createdAppointment.PatientName);
             Assert.Equal(1, _context.Appointments.Count());
+        }
+
+        [Fact]
+        public async Task GetAppointmentById_ReturnsAppointment_WhenExists()
+        {
+            // Set up the test
+            var appointment = new Appointment
+            {
+                Id = Guid.NewGuid(),
+                PatientName = "Sarah Connor",
+                PatientContact = "987-654-3210",
+                ScheduledAt = DateTime.UtcNow.AddHours(2),
+                ClinicId = "ClinicH2",
+                Status = "Pending"
+            };
+            _context.Appointments.Add(appointment);
+            await _context.SaveChangesAsync();
+
+            var controller = new AppointmentsController(_context, _cache, _logger);
+
+            // Perform the action
+            var result = await controller.GetAppointmentById(appointment.Id);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var returnedAppointment = Assert.IsType<Appointment>(okResult.Value);
+            Assert.Equal("Bob Marley", returnedAppointment.PatientName);
         }
     }
 }
