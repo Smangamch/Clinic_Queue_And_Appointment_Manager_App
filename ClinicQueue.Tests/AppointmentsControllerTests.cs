@@ -137,5 +137,30 @@ namespace ClinicQueue.Tests
             Assert.IsType<NoContentResult>(result);
             Assert.Equal("Completed", _context.Appointments.Find(appointment.Id)!.Status);
         }
+
+        [Fact]
+        public async Task DeleteAppointment_RemoveAppoinmentWhenExists()
+        {
+            // Set up the test
+            var appointment = new Appointment
+            {
+                Id = Guid.NewGuid(),
+                PatientName = "Pam Beesly",
+                PatientContact = "pambee@gmail.com",
+                ScheduledAt = DateTime.UtcNow.AddHours(4),
+                ClinicId = "ClinicH3"
+            };
+            _context.Appointments.Add(appointment);
+            await _context.SaveChangesAsync();
+
+            var controller = new AppointmentsController(_context, _cache, _logger);
+
+            // Perform the action
+            var result = await controller.DeleteAppointment(appointment.Id);
+            
+            // Assert if the appointment was deleted
+            Assert.Null(_context.Appointments.Find(appointment.Id));
+            Assert.IsType<NoContentResult>(result);
+        }
     }
 }
