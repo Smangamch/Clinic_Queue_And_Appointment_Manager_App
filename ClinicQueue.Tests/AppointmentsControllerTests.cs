@@ -14,6 +14,7 @@ using Microsoft.Extensions.Caching.Memory;
 using ClinicQueue.Api.DTOs;
 using SQLitePCL;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace ClinicQueue.Tests
 {
@@ -68,7 +69,7 @@ namespace ClinicQueue.Tests
             var result = await controller.CreateAppointment(newAppointment);
             _logger.LogInformation("New appointment has been created successfully.");
 
-            // Assert
+            // Assert if the result is CreatedAtActionResult and contains the correct data
             var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result);
             var createdAppointment = Assert.IsType<Appointment>(createdAtActionResult.Value);
             Assert.Equal("James Milner", createdAppointment.PatientName);
@@ -96,10 +97,45 @@ namespace ClinicQueue.Tests
             // Perform the action
             var result = await controller.GetAppointmentById(appointment.Id);
 
-            // Assert
+            // Assert if the returned appointment matches the created one
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var returnedAppointment = Assert.IsType<Appointment>(okResult.Value);
-            Assert.Equal("Bob Marley", returnedAppointment.PatientName);
+            Assert.Equal("Sarah Connor", returnedAppointment.PatientName);
+        }
+
+        [Fact]
+        public async Task UpdateAppointment_ChangesStatusToCompleted()
+        {
+            // Set up the test
+            var appointment = new Appointment
+            {
+                Id = Guid.NewGuid(),
+                PatientName = "Michael Scott",
+                PatientContact = "michels@yahoo.com",
+                ScheduledAt = DateTime.UtcNow.AddHours(3),
+                ClinicId = "ClinicH3",
+                Status = "Pending"
+            };
+            _context.Appointments.Add(appointment);
+            await _context.SaveChangesAsync();
+
+            var controller = new AppointmentsController(_context, _cache, _logger);
+            // Prepare the update DTO and set status to "Completed"
+            var updatedAppointmentDto = new UpdateAppointmentDto
+            {
+                PatientName = appointment.PatientName,
+                PatientContact = appointment.PatientContact,
+                ScheduledAt = appointment.ScheduledAt,
+                ClinicId = appointment.ClinicId,
+                Status = appointment.Status = "Completed"
+            };
+
+            // Perform the action
+            var result = await controller.UpdateAppointment(appointment.Id, updatedAppointmentDto);
+
+            // Assert if the status was updated
+            Assert.IsType<NoContentResult>(result);
+            Assert.Equal("Completed", _context.Appointments.Find(appointment.Id)!.Status);
         }
     }
 }

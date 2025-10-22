@@ -7,5 +7,5 @@ public class UpdateAppointmentDto
     public string PatientContact { get; set; } = null!;
     public DateTime ScheduledAt { get; set; }
     public string ClinicId { get; set; } = null!;
-
+    public string Status { get; set; } = null!;
 } 
