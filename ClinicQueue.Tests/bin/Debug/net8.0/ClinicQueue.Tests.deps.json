@@ -1710,7 +1710,7 @@
         },
         "runtime": {
           "ClinicQueue.Api.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -1718,7 +1718,7 @@
       "ClinicQueue.Domain/1.0.0": {
         "runtime": {
           "ClinicQueue.Domain.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -1731,7 +1731,7 @@
         },
         "runtime": {
           "ClinicQueue.Infrastructure.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }

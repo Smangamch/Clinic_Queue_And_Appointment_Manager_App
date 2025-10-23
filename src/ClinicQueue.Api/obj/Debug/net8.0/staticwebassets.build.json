@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "veoGNpDwwxhqpfvJjhxdG/0ywAYg3q0XROLYTYSSKZI=",
-  "Source": "ClinicQueue.Api",
-  "BasePath": "_content/ClinicQueue.Api",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"rjxfJOLEe5DsLIIMk/zWqzyFia1ilor3KVlQ/+oWdX4=","Source":"ClinicQueue.Api","BasePath":"_content/ClinicQueue.Api","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

@@ -168,3 +168,4 @@ C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\obj\
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\obj\Debug\net8.0\ClinicQueue.Tests.pdb
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\obj\Debug\net8.0\ClinicQueue.Tests.genruntimeconfig.cache
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\obj\Debug\net8.0\ref\ClinicQueue.Tests.dll
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\bin\Debug\net8.0\ClinicQueue.Api.staticwebassets.endpoints.json

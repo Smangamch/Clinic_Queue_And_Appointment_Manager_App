@@ -1,0 +1,9 @@
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\bin\Debug\net8.0\.msCoverageSourceRootsMapping_ClinicQueue.IntegrationTests
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\bin\Debug\net8.0\CoverletSourceRootsMapping_ClinicQueue.IntegrationTests
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\obj\Debug\net8.0\ClinicQueue.IntegrationTests.csproj.AssemblyReference.cache
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\obj\Debug\net8.0\MvcTestingAppManifest.json
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\obj\Debug\net8.0\ClinicQueue.IntegrationTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\obj\Debug\net8.0\ClinicQueue.IntegrationTests.AssemblyInfoInputs.cache
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\obj\Debug\net8.0\ClinicQueue.IntegrationTests.AssemblyInfo.cs
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\obj\Debug\net8.0\ClinicQueue.IntegrationTests.csproj.CoreCompileInputs.cache
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\obj\Debug\net8.0\ClinicQueue.IntegrationTests.sourcelink.json
