@@ -21,7 +21,7 @@ namespace ClinicQueue.IntegrationTests
         public async Task CreateAppointment_ReturnsCreated()
         {
             // Set up the test appointment data
-            var appointment = new Appoinment
+            var appointment = new Appointment
             {
                 PatientName = "Steven Douglas",
                 PatientContact = "stevend@gmail.com",
@@ -41,7 +41,7 @@ namespace ClinicQueue.IntegrationTests
             var response = await _client.GetAsync("/api/appointments");
             response.EnsureSuccessStatusCode();
 
-            var result await response.Content.ReadAsStringAsync();
+            var result = await response.Content.ReadAsStringAsync();
             Assert.NotNull(result);
         }
     }
