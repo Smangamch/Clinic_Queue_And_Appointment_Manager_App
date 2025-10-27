@@ -1,8 +1,11 @@
-using system.Net;
+using System;
+using System.Net;
 using System.Net.Http.Json;
 using Xunit;
 using ClinicQueue.Domain.Entities;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Hosting;
 
 namespace ClinicQueue.IntegrationTests
 {
@@ -14,7 +17,18 @@ namespace ClinicQueue.IntegrationTests
         // Constructor to initialize the HttpClient
         public AppointmentsIntegrationTests(WebApplicationFactory<Program> factory)
         {
-            _client = factory.CreateClient();
+            var configuredFactory = factory.WithWebHostBuilder(builder =>
+            {
+                builder.UseEnvironment("Development");
+                builder.ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                    logging.SetMinimumLevel(LogLevel.Debug);
+                });
+            });
+
+            _client = configuredFactory.CreateClient();
         }
 
         [Fact]
@@ -29,20 +43,23 @@ namespace ClinicQueue.IntegrationTests
                 ClinicId = "ClinicJ1"
             };
 
-            // Send POST request to create a new appointment and verify the response
             var response = await _client.PostAsJsonAsync("/api/appointments", appointment);
-            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            Assert.True(
+                response.StatusCode == HttpStatusCode.Created,
+                $"Unexpected status code: {response.StatusCode}"
+            );
         }
+        
 
         [Fact]
         public async Task GetAppointments_ReturnsSuccess()
         {
             // Send GET request to retrieve all appointments and verify the response
             var response = await _client.GetAsync("/api/appointments");
-            response.EnsureSuccessStatusCode();
-
-            var result = await response.Content.ReadAsStringAsync();
-            Assert.NotNull(result);
+            Assert.True(
+                response.StatusCode == HttpStatusCode.OK,
+                $"Unexpected status code: {response.StatusCode}"
+            );
         }
     }
 }

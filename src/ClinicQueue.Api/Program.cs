@@ -56,3 +56,5 @@ app.UseAuthorization();
 app.MapControllers();
 app.UseHttpsRedirection();
 app.Run();
+
+public partial class Program { } // For integration testing purposes

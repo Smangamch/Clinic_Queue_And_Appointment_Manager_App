@@ -1,7 +1,6 @@
 {
   "version": "0.2.0",
   "configurations": [
-
     {
       "name": "ClinicQueue API (Debug)",
       "type": "coreclr",
@@ -20,8 +19,22 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/src/ClinicQueue.Api/Views"
       },
-       "checkForDevCert": false,
-       "requireExactSource": false
+      "checkForDevCert": false,
+      "requireExactSource": false
+    },
+
+    {
+      "name": "Debug Integration Tests (All)",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "C:\\Program Files\\dotnet\\dotnet.exe",
+      "args": [
+        "test",
+        "${workspaceFolder}/ClinicQueue.IntegrationTests/ClinicQueue.IntegrationTests.csproj"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
     }
   ]
 }

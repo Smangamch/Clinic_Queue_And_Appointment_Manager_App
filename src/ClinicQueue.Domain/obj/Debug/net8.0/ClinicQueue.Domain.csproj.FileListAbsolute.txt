@@ -1,11 +1,11 @@
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\bin\Debug\net8.0\ClinicQueue.Domain.deps.json
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\bin\Debug\net8.0\ClinicQueue.Domain.dll
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\bin\Debug\net8.0\ClinicQueue.Domain.pdb
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\obj\Debug\net8.0\ClinicQueue.Domain.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\obj\Debug\net8.0\ClinicQueue.Domain.AssemblyInfoInputs.cache
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\obj\Debug\net8.0\ClinicQueue.Domain.AssemblyInfo.cs
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\obj\Debug\net8.0\ClinicQueue.Domain.csproj.CoreCompileInputs.cache
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\obj\Debug\net8.0\ClinicQueue.Domain.sourcelink.json
-C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\bin\Debug\net8.0\ClinicQueue.Domain.deps.json
-C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\bin\Debug\net8.0\ClinicQueue.Domain.dll
-C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\bin\Debug\net8.0\ClinicQueue.Domain.pdb
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\obj\Debug\net8.0\ClinicQueue.Domain.dll
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\obj\Debug\net8.0\refint\ClinicQueue.Domain.dll
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\src\ClinicQueue.Domain\obj\Debug\net8.0\ClinicQueue.Domain.pdb

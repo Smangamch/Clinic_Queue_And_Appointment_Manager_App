@@ -4,6 +4,7 @@ C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\bin\
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\bin\Debug\net8.0\ClinicQueue.Api.runtimeconfig.json
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\bin\Debug\net8.0\appsettings.json
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\bin\Debug\net8.0\ClinicQueue.Api.staticwebassets.endpoints.json
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\bin\Debug\net8.0\ClinicQueue.Api.exe
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\bin\Debug\net8.0\testhost.exe
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\bin\Debug\net8.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll
@@ -168,4 +169,3 @@ C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\obj\
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\obj\Debug\net8.0\ClinicQueue.Tests.pdb
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\obj\Debug\net8.0\ClinicQueue.Tests.genruntimeconfig.cache
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\obj\Debug\net8.0\ref\ClinicQueue.Tests.dll
-C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Tests\bin\Debug\net8.0\ClinicQueue.Api.staticwebassets.endpoints.json
