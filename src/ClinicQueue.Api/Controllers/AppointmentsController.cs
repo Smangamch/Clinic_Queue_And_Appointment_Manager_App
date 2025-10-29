@@ -205,10 +205,15 @@ namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
                 .ToListAsync();
 
             return Ok(pagedAppointments);
-
         }
 
-
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            Console.WriteLine("GetAll method called.");
+            var appointments = _context.Appointments.ToList();
+            return Ok(appointments);
+        }
     }
 }
 

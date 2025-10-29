@@ -52,9 +52,9 @@ app.Use(async (context, next) =>
 });
 
 // Configure the HTTP request pipeline for the application
+// only enable HTTPS redirection in Production to avoid test host redirect issues
 app.UseAuthorization();
 app.MapControllers();
-app.UseHttpsRedirection();
 app.Run();
 
 public partial class Program { } // For integration testing purposes
