@@ -1,6 +1,7 @@
 {
   "version": "0.2.0",
   "configurations": [
+
     {
       "name": "ClinicQueue API (Debug)",
       "type": "coreclr",
@@ -24,17 +25,15 @@
     },
 
     {
-      "name": "Debug Integration Tests (All)",
+      "name": ".NET Test Debug",
       "type": "coreclr",
       "request": "launch",
-      "program": "C:\\Program Files\\dotnet\\dotnet.exe",
-      "args": [
-        "test",
-        "${workspaceFolder}/ClinicQueue.IntegrationTests/ClinicQueue.IntegrationTests.csproj"
-      ],
-      "cwd": "${workspaceFolder}",
+      "program": "dotnet",
+      "args": ["test", "--no-build", "--filter", "FullyQualifiedName~AppointmentsIntegrationTests"],
+      "cwd": "${workspaceFolder}/ClinicQueue.IntegrationTests",
       "console": "integratedTerminal",
       "stopAtEntry": false
     }
+
   ]
 }

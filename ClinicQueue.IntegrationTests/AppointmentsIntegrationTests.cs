@@ -8,11 +8,12 @@ using ClinicQueue.Domain.Entities;
 
 namespace ClinicQueue.IntegrationTests
 {
-    public class AppointmentsIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
+    public class AppointmentsIntegrationTests : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         private readonly HttpClient _client;
 
-        public AppointmentsIntegrationTests(WebApplicationFactory<Program> factory)
+        // Constructor that initializes the HttpClient for making requests to the test server
+        public AppointmentsIntegrationTests(CustomWebApplicationFactory<Program> factory)
         {
             // This ensures _client is properly initialized for all tests
             _client = factory.CreateClient();
@@ -31,6 +32,8 @@ namespace ClinicQueue.IntegrationTests
 
             // Act - POST the appointment
             var response = await _client.PostAsJsonAsync("/api/appointments", appointment);
+            var content = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Response Content: {content}");
 
             // Assert
             Assert.True(
@@ -44,6 +47,8 @@ namespace ClinicQueue.IntegrationTests
         {
             // Act
             var response = await _client.GetAsync("/api/appointments");
+            var result = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Response Content: {result}");
 
             // Assert
             Assert.True(
@@ -53,3 +58,5 @@ namespace ClinicQueue.IntegrationTests
         }
     }
 }
+
+
