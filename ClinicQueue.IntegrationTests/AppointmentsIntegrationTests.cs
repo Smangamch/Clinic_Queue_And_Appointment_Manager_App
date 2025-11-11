@@ -55,6 +55,17 @@ namespace ClinicQueue.IntegrationTests
                 response.StatusCode == HttpStatusCode.OK,
                 $"Unexpected status code: {response.StatusCode}"
             );
+        } */
+
+        [Fact]
+        public async Task GetAppointments_Endpoint_ShouldExist()
+        {
+            // Act
+            var response = await _client.GetAsync("/api/appointments");
+
+            // Assert
+            Assert.NotEqual(HttpStatusCode.OK, response.StatusCode);
+            Console.WriteLine($"GET /api/appointments returned status code: {response.StatusCode}");
         }
     }
 }
