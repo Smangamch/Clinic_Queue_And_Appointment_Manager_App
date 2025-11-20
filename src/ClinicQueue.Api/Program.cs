@@ -35,5 +35,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+app.MapGet("/debug/routes", (EndpointDataSource es) =>
+    es.Endpoints.Select(e => e.DisplayName).ToList());
+
 
 public partial class Program { } // For integration testing purposes

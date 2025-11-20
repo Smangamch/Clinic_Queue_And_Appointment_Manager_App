@@ -8,12 +8,12 @@ using ClinicQueue.Domain.Entities;
 
 namespace ClinicQueue.IntegrationTests
 {
-    public class AppointmentsIntegrationTests : IClassFixture<CustomWebApplicationFactory<Program>>
+    public class AppointmentsIntegrationTests : IClassFixture<CustomWebApplicationFactory>
     {
         private readonly HttpClient _client;
 
         // Constructor that initializes the HttpClient for making requests to the test server
-        public AppointmentsIntegrationTests(CustomWebApplicationFactory<Program> factory)
+        public AppointmentsIntegrationTests(CustomWebApplicationFactory factory)
         {
             // This ensures _client is properly initialized for all tests
             _client = factory.CreateClient();
@@ -55,7 +55,7 @@ namespace ClinicQueue.IntegrationTests
                 response.StatusCode == HttpStatusCode.OK,
                 $"Unexpected status code: {response.StatusCode}"
             );
-        } */
+        } 
 
         [Fact]
         public async Task GetAppointments_Endpoint_ShouldExist()
@@ -67,6 +67,10 @@ namespace ClinicQueue.IntegrationTests
             Assert.NotEqual(HttpStatusCode.OK, response.StatusCode);
             Console.WriteLine($"GET /api/appointments returned status code: {response.StatusCode}");
         }
+
+        /* var debug = await _client.GetStringAsync("/debug/routes");
+        Console.WriteLine(debug); */
+
     }
 }
 

@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace ClinicQueue.IntegrationTests
 {
     // Custom web application factory to configure the test server environment
-    public class CustomWebApplicationFactory<iStartup> : WebApplicationFactory<Program> where iStartup : class
+    public class CustomWebApplicationFactory: WebApplicationFactory<Program> 
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
