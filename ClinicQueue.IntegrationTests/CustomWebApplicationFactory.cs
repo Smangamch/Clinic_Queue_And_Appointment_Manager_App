@@ -15,26 +15,31 @@ namespace ClinicQueue.IntegrationTests
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.UseEnvironment("Testing");
+        builder.ConfigureServices(services =>
+        {
+            // Remove existing DbContext registration (SQLite)
+            var descriptors = services
+                .Where(d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>))
+                .ToList();
 
-            builder.ConfigureServices(services =>
+            foreach (var d in descriptors)
+                services.Remove(d);
+
+            // Add InMemory database for testing
+            services.AddDbContext<ApplicationDbContext>(options =>
             {
-                // Remove existing DbContext registration (SQLite)
-                var descriptor = services.SingleOrDefault(
-                    d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>));
-
-                if (descriptor != null)
-                {
-                    services.Remove(descriptor);
-                }
-
-                // Add InMemory database for testing
-                services.AddDbContext<ApplicationDbContext>(options =>
-                {
-                    options.UseInMemoryDatabase("TestDb");
-                });
+                options.UseInMemoryDatabase("IntegrationTestDb");
             });
 
+            // Build the service provider
+            var sp = services.BuildServiceProvider();
+
+            // Create DB and apply schema
+            using var scope = sp.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            db.Database.EnsureCreated();
+            });
         }
     }
 }

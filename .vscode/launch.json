@@ -32,8 +32,8 @@
       "args": ["test", "--no-build", "--filter", "FullyQualifiedName~AppointmentsIntegrationTests"],
       "cwd": "${workspaceFolder}/ClinicQueue.IntegrationTests",
       "console": "integratedTerminal",
-      "stopAtEntry": false
+      "stopAtEntry": false,
+      "justMyCode": false
     }
-
   ]
 }

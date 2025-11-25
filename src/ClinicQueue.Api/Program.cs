@@ -1,42 +1,37 @@
-using Microsoft.EntityFrameworkCore;
 using ClinicQueue.Infrastructure;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder();
+var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
+// Services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configure the database context to use SQLite by registering the ApplicationDbContext with the dependency injection container
-builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseSqlite(
+// EF with SQLite
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(
         builder.Configuration.GetConnectionString("DefaultConnection")
-        ?? "Data Source=clinicqueue.db" // Fallback connection string if not found in configuration
+        ?? "Data Source=clinicqueue.db"
     )
 );
 
 builder.Services.AddMemoryCache();
+builder.Services.AddLogging();
 
 var app = builder.Build();
 
-// Enable middleware to serve generated Swagger as a JSON endpoint and the Swagger UI
+// Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-
-
-// Configure the HTTP request pipeline for the application
-// only enable HTTPS redirection in Production to avoid test host redirect issues
+// Pipeline
 app.UseAuthorization();
 app.MapControllers();
+
 app.Run();
-app.MapGet("/debug/routes", (EndpointDataSource es) =>
-    es.Endpoints.Select(e => e.DisplayName).ToList());
 
-
-public partial class Program { } // For integration testing purposes
+public partial class Program { }  // Required for WebApplicationFactory
