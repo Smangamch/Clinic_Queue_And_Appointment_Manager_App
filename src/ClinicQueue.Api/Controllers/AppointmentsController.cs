@@ -7,7 +7,7 @@ using ClinicQueue.Domain.Entities;
 using ClinicQueue.Api.DTOs;
 using Microsoft.Extensions.Caching.Memory; 
 
-namespace ClinicQueue.Api.Controllers // Fixed namespace declaration
+namespace ClinicQueue.Api.Controllers 
 {
     // This is the REST API controller which inherits from the ControllerBase
     [ApiController]

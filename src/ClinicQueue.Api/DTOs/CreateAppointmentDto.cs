@@ -1,5 +1,5 @@
 namespace ClinicQueue.Api.DTOs;
-
+            
 public class CreateAppointmentDto
 {
     public string PatientName { get; set; } = null!;
