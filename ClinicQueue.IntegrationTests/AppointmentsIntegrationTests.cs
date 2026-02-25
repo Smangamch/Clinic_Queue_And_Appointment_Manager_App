@@ -68,8 +68,7 @@ namespace ClinicQueue.IntegrationTests
             Console.WriteLine($"GET /api/appointments returned status code: {response.StatusCode}");
         }
 
-        /* var debug = await _client.GetStringAsync("/debug/routes");
-        Console.WriteLine(debug); */
+        
 
     }
 }
