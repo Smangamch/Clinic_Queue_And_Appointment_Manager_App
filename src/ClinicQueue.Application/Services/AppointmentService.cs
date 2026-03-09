@@ -42,5 +42,44 @@ public class AppointmentService : IAppointmentService
         return await _context.Appointments
         .AsNoTracking()
         .FirstOrDefaultAsync(a => a.Id == id);
-    }bn
+    }
+
+    public async Task<bool> DeleteAppointment(Guid id)
+    {
+        // FInd the appointment by id and remove it from the database context, then save changes to persist the deletion.
+        var appointment = await _context.Appointments.FindAsync(id);
+        if(appointment == null)
+        {
+            return false;
+        }
+
+        _context.Appointments.Remove(appointment);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<Appointment> UpdateAsync(Guid id, Appointment updatedAppointment)
+    {
+        // Find the existing appointment by id, update its properties with the new values, and save changes to persist the updates.
+        var appointment = await _context.Appointments.FindAsync(id);
+
+        if(appointment == null)
+        {
+            return null;
+        }
+
+        if(updatedAppointment.ScheduledAt <= DateTime.UtcNow)
+        {
+            throw new ArgumentException("Scheduled time must be in the future or cannot be in the past.");
+        }
+
+        appointment.PatientName = updatedAppointment.PatientName;
+        appointment.ScheduledAt = updatedAppointment.ScheduledAt;
+        appointment.PatientContact = updatedAppointment.PatientContact;
+
+        await _context.SaveChangesAsync();
+        return appointment;
+
+
+    }
 }

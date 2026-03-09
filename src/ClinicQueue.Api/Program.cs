@@ -1,5 +1,6 @@
 using ClinicQueue.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using ClinicQueue.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
 // EF with SQLite
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
