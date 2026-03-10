@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ClinicQueue.Infrastructure\ClinicQueue.Infrastructure.csproj" />
+    <ProjectReference Include="..\ClinicQueue.Application\ClinicQueue.Application.csproj" />
   </ItemGroup>
 
 </Project>

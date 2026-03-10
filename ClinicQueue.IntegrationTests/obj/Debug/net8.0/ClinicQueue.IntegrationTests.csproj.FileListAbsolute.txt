@@ -452,9 +452,11 @@ C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.Integratio
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\bin\Debug\net8.0\ClinicQueue.Api.dll
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\bin\Debug\net8.0\ClinicQueue.Application.dll
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\bin\Debug\net8.0\ClinicQueue.Domain.dll
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\bin\Debug\net8.0\ClinicQueue.Infrastructure.dll
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\bin\Debug\net8.0\ClinicQueue.Api.pdb
+C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\bin\Debug\net8.0\ClinicQueue.Application.pdb
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\bin\Debug\net8.0\ClinicQueue.Domain.pdb
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\bin\Debug\net8.0\ClinicQueue.Infrastructure.pdb
 C:\Users\NWUUSER\Clinic_Queue_And_Appointment_Manager_App\ClinicQueue.IntegrationTests\obj\Debug\net8.0\ClinicQueue.IntegrationTests.csproj.AssemblyReference.cache

@@ -3314,6 +3314,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
+          "ClinicQueue.Application": "1.0.0",
           "ClinicQueue.Infrastructure": "1.0.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.20",
           "Microsoft.AspNetCore.SignalR": "1.2.0",
@@ -3331,6 +3332,20 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "ClinicQueue.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "ClinicQueue.Domain": "1.0.0",
+          "ClinicQueue.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/ClinicQueue.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ClinicQueue.Application.dll": {}
+        }
       },
       "ClinicQueue.Domain/1.0.0": {
         "type": "project",
@@ -9396,6 +9411,11 @@
       "type": "project",
       "path": "../src/ClinicQueue.Api/ClinicQueue.Api.csproj",
       "msbuildProject": "../src/ClinicQueue.Api/ClinicQueue.Api.csproj"
+    },
+    "ClinicQueue.Application/1.0.0": {
+      "type": "project",
+      "path": "../src/ClinicQueue.Application/ClinicQueue.Application.csproj",
+      "msbuildProject": "../src/ClinicQueue.Application/ClinicQueue.Application.csproj"
     },
     "ClinicQueue.Domain/1.0.0": {
       "type": "project",

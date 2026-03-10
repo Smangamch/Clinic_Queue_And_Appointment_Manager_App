@@ -55,7 +55,7 @@ public class AppointmentsController : ControllerBase
     public async Task<IActionResult> Update(Guid id, Appointment updatedAppointment)
     {
         var appointment = await _appointmentService.UpdateAsync(id, updatedAppointment);
-        
+
         if (appointment == null) 
             return NotFound();
         

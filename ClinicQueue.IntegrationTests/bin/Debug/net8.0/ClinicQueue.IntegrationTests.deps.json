@@ -2374,6 +2374,7 @@
       "xunit.runner.visualstudio/3.1.5": {},
       "ClinicQueue.Api/1.0.0": {
         "dependencies": {
+          "ClinicQueue.Application": "1.0.0",
           "ClinicQueue.Infrastructure": "1.0.0",
           "Microsoft.AspNetCore.OpenApi": "8.0.20",
           "Microsoft.AspNetCore.SignalR": "1.2.0",
@@ -2390,6 +2391,21 @@
         },
         "compile": {
           "ClinicQueue.Api.dll": {}
+        }
+      },
+      "ClinicQueue.Application/1.0.0": {
+        "dependencies": {
+          "ClinicQueue.Domain": "1.0.0",
+          "ClinicQueue.Infrastructure": "1.0.0"
+        },
+        "runtime": {
+          "ClinicQueue.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "ClinicQueue.Application.dll": {}
         }
       },
       "ClinicQueue.Domain/1.0.0": {
@@ -5353,6 +5369,11 @@
       "hashPath": "xunit.runner.visualstudio.3.1.5.nupkg.sha512"
     },
     "ClinicQueue.Api/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ClinicQueue.Application/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
