@@ -15,6 +15,16 @@ public class AppointmentService : IAppointmentService
 
     public async Task<Appointment> CreateAsync(Appointment appointment)
     {
+        // Validate if any appointment exists at the same scheduled time to prevent double booking
+        var exists = _context.Appointments.
+            AnyAsync(a => a.ScheduledAt == appointment.ScheduledAt);
+
+        // If an appointment already exists at the same time, throw an exception to indicate a scheduling conflict
+        if(exists)
+        {
+            throw new InvalidOperationException("An appointment is already scheduled at this time.");
+        }
+
         // Add the new appointment to the database context and save changes to persist it in the database
         _context.Appointments.Add(appointment);
         await _context.SaveChangesAsync();
@@ -61,7 +71,8 @@ public class AppointmentService : IAppointmentService
         {
             return null;
         }
-
+        
+        // Validate that the new scheduled time is not in the past
         if(updatedAppointment.ScheduledAt <= DateTime.UtcNow)
         {
             throw new ArgumentException("Scheduled time must be in the future or cannot be in the past.");
@@ -72,7 +83,34 @@ public class AppointmentService : IAppointmentService
         appointment.PatientContact = updatedAppointment.PatientContact;
 
         await _context.SaveChangesAsync();
-        
+
         return appointment;
+    }
+
+    public async Task<Appointment?> UpdateStatusAsync(Guid id, string newStatus)
+    {
+        var appointment = await _context.Appointments.FindAsync(id);
+
+        if(appointment == null)
+        {
+            return null;
+        }
+        
+        // Validate status transition rules (e.g., Pending -> Scheduled -> CheckedIn -> Completed)
+        bool isValidTransition = 
+            (appointment.Status == "Pending" && newStatus == "Scheduled") ||
+            (appointment.Status == "Scheduled" && newStatus == "CheckedIn") ||
+            (appointment.Status == "CheckedIn" && newStatus == "Completed");
+
+        // If the transition is not valid, throw an exception or return an error
+        if(!isValidTransition)
+        {
+            throw new InvalidOperationException($"Invalid status transition from {appointment.Status} to {newStatus}.");
+        }
+
+        appointment.Status = newStatus;
+        await _context.SaveChangesAsync();
+        return appointment;
+
     }
 }

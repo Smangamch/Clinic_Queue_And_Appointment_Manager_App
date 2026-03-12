@@ -15,6 +15,8 @@ using ClinicQueue.Api.DTOs;
 using SQLitePCL;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Moq;
+using ClinicQueue.Application.Services;
 
 namespace ClinicQueue.Tests
 {
@@ -80,6 +82,7 @@ namespace ClinicQueue.Tests
         public async Task GetAppointmentById_ReturnsAppointment_WhenExists()
         {
             // Set up the test
+            var mockService = new Mock<IAppointmentService>();
             var appointment = new Appointment
             {
                 Id = Guid.NewGuid(),
@@ -135,7 +138,7 @@ namespace ClinicQueue.Tests
 
             // Assert if the status was updated
             Assert.IsType<NoContentResult>(result);
-            Assert.Equal("Completed", _context.Appointments.Find(appointment.Id)!.Status);
+            Assert.Equal("Completed", _context.Appointments.Find(appointment.Id).Status);
         }
 
         [Fact]
