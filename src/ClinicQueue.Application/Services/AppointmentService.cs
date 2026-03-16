@@ -1,6 +1,8 @@
 using ClinicQueue.Domain.Entities;
 using ClinicQueue.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using ClinicQueue.Application.DTOs;
+
 
 namespace ClinicQueue.Application.Services;
 
@@ -16,7 +18,7 @@ public class AppointmentService : IAppointmentService
     public async Task<Appointment> CreateAsync(Appointment appointment)
     {
         // Validate if any appointment exists at the same scheduled time to prevent double booking
-        var exists = _context.Appointments.
+        var exists = await _context.Appointments.
             AnyAsync(a => a.ScheduledAt == appointment.ScheduledAt);
 
         // If an appointment already exists at the same time, throw an exception to indicate a scheduling conflict
@@ -124,17 +126,51 @@ public class AppointmentService : IAppointmentService
         /// </remarks>
         var appointment = await _context.Appointments
             .AsNoTracking()
-            .FirstOrDefaultAsync(a => a.Appointment.Id == id);
+            .FirstOrDefaultAsync(a => a.Id == id);
 
         if(appointment == null)
         {
             throw new KeyNotFoundException("Appointment not found.");
         }
 
+        // Calculate the queue number by counting how many appointments are scheduled before the current appointment's scheduled time.
+        var queueNumber = await _context.Appointments
+            .CountAsync(a => a.ScheduledAt < appointment.ScheduledAt) + 1; // +1 to convert from 0-based index to 1-based queue number
+
         return new AppointmentQueueDto
         {
-            Id = appointment.Appointment.Id,
-            QueueNumber = appointment.QueueNumber
+            AppointmentId = appointment.Id,
+            QueueNumber = queueNumber
+        };
+    }
+
+    public async Task<PagedResult<Appointment>> GetPagedAsync(int page, int pageSize, string? status)
+    {
+        // Retrieves a paginated list of appointments, optionally filtered by status, and ordered by scheduled time.
+        var query = _context.Appointments.AsQueryable();
+
+        // Filtering
+        if(!string.IsNullOrEmpty(status))
+        {
+            query = query.Where(a => a.Status == status);
+        }
+
+        //Total records before pagination
+        var totalRecords = await query.CountAsync();
+
+        //Pagination
+        var appointments = await query
+            .OrderBy(a => a.ScheduledAt)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return new PagedResult<Appointment>
+        {
+            Data = appointments,
+            TotalRecords = totalRecords,
+            Page = page,
+            PageSize = pageSize
         };
     }
 }

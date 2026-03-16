@@ -61,5 +61,22 @@ public class AppointmentsController : ControllerBase
         
         return Ok(appointment);
     }
+
+    [HttpGet("{id}/queue-position")]
+    public async Task<IActionResult> GetQueuePosition(Guid id)
+    {
+        var queuePosition = await _appointmentService.GetQueuePositionAsync(id);
+        if (queuePosition == null) 
+            return NotFound();
+
+        return Ok(queuePosition);
+    }
+
+    [HttpGet("paged")]
+    public async Task<IActionResult> GetPaged(int page = 1, int pageSize = 10, string? status = null)
+    {
+        var pagedResult = await _appointmentService.GetPagedAsync(page, pageSize, status);
+        return Ok(pagedResult);
+    }
 }
 
