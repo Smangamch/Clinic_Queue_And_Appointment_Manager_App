@@ -113,4 +113,28 @@ public class AppointmentService : IAppointmentService
         return appointment;
 
     }
+
+    public async Task<AppointmentQueueDto> GetQueuePositionAsync(Guid id)
+    {
+        /// <summary>
+        /// Retrieves the appointment with the specified ID and its queue number based on scheduled time ordering.
+        /// </summary>
+        /// <remarks>
+        /// The queue number is determined by the appointment's position in the ordered list.
+        /// </remarks>
+        var appointment = await _context.Appointments
+            .AsNoTracking()
+            .FirstOrDefaultAsync(a => a.Appointment.Id == id);
+
+        if(appointment == null)
+        {
+            throw new KeyNotFoundException("Appointment not found.");
+        }
+
+        return new AppointmentQueueDto
+        {
+            Id = appointment.Appointment.Id,
+            QueueNumber = appointment.QueueNumber
+        };
+    }
 }
