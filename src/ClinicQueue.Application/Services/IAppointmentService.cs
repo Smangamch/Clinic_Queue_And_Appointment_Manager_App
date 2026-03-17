@@ -12,5 +12,6 @@ namespace ClinicQueue.Application.Services
         Task<Appointment?> UpdateAsync(Guid id, Appointment updatedAppointment);
         Task<AppointmentQueueDto> GetQueuePositionAsync(Guid id);
         Task<PagedResult<Appointment>> GetPagedAsync(int page, int pageSize, string? status);
+        Task<IEnumerable<TodayQueueDto>> GetTodayQueueAsync();
     }
 }

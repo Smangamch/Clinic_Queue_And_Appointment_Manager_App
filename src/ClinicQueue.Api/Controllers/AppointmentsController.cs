@@ -78,5 +78,12 @@ public class AppointmentsController : ControllerBase
         var pagedResult = await _appointmentService.GetPagedAsync(page, pageSize, status);
         return Ok(pagedResult);
     }
+
+    [HttpGet("today")]
+    public async Task<IActionResult> GetTodayQueue()
+    {
+        var todayQueue = await _appointmentService.GetTodayQueueAsync();
+        return Ok(todayQueue);
+    }
 }
 
