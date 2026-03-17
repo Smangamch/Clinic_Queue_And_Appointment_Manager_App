@@ -1,48 +1,151 @@
 # ClinicQueue App
 
-## About the project
-The Clinic Queue & Appointment Manager App is a lightweight application designed to help community clinics and small healthcare practices reduce waiting times and improve patient flow management. The system enables patients to book, reschedule, or cancel appointments, while clinic staff can manage daily queues, check in patients, and monitor real-time updates.
+## Overview
 
-From a development perspective, this project serves as a hands-on exploration of modern C# and .NET technologies, covering clean architecture, Entity Framework Core for persistence, ASP.NET Core Web API for service endpoints, and SignalR for real-time communication. The project is built incrementally with focus on separation of concern, enforcing clarity on testability, scalability, and maintainability — making it both a practical solution to a real-world problem and a valuable exercise in full-stack .NET application development. 
+ClinicQueue is a backend API for managing clinic appointment scheduling, queue position calculation, and appointment status workflow. It is built with modern C#/.NET architecture principles and designed for maintainability, testability, and real-world clinical operations.
+
+## Table of Contents
+
+- [Features](#features)
+- [Architecture](#architecture)
+- [API Endpoints](#api-endpoints)
+- [Getting Started](#getting-started)
+- [Testing](#testing)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [Author](#author)
 
 ## Features
-### Core features
-* Create Appointments - Add new patient appointments with details like patient name, contact, clinic ID, and scheduled
-* Retrieve Appointments - Fetch all appointments or a specific appointment by its unique ID.
-* Update Appointments - Modify existing appointment details such as time, patient information, or clinic assignment.
-* Delete Appointments - Permanently remove or cancel an appointment.
 
-### Filtering and Querying
-* Filter by Clinic - Retrieve all appointments for a specific clinic using its clinic ID.
-* Filter by Date - Get all appointments scheduled for a particular date.
-* Search (Upcoming Feature) - Search appointments by patient name or contact details **(to be added)**.
+### Appointment Management
 
-### Appointment Status Management
-* Track Appointment Status - Each appointment includes a Status field __(Pending, Completed, or Cancelled)__.
-* Update Status - Change appointment status using a dedicated API endpoint.
+- Create, read, update, and delete appointments
+- Prevents scheduling conflicts (double-booking)
+- Business validation for required fields and date/time rules
 
-### Perfomance Optimization
-* In-Memory Caching - Reduces database queries for frequently accessed appointment data.
-* Lightweight Storage - Uses SQLite for a simple, file-based, and portable database but I have also added **MySQL** package to the project for later migration
+### Queue Management
 
-## How to run the project
+- Computes dynamic daily queue position by appointment time
+- Returns daily queue list with position and status
+- Supports queue lookup by appointment ID
+
+### Status Workflow
+
+- Enforces controlled transitions:
+  - `Pending` → `Scheduled` → `CheckedIn` → `Completed`
+- Protects against invalid status updates
+
+### Pagination and Filtering
+
+- Supports paged responses with `page` and `pageSize`
+- Supports filtering by status and date range
+- Combines filtering and pagination in one endpoint
+
+### API Documentation
+
+- Integrated Swagger UI for interactive API exploration
+- Automatically generated OpenAPI documentation
+
+## Architecture
+
+- ASP.NET Core Web API
+- Clean architecture separation (API, Application, Domain, Infrastructure)
+- Entity Framework Core (EF Core)
+- DTO-based API contract
+- Async/await for scalable I/O operations
+
+## API Endpoints
+
+### Appointments
+
+- `GET /api/appointments`
+- `GET /api/appointments/{id}`
+- `POST /api/appointments`
+- `PUT /api/appointments/{id}`
+- `DELETE /api/appointments/{id}`
+
+### Advanced & Utility
+
+- `GET /api/appointments/paged` — pagination + filtering
+- `GET /api/appointments/today` — today's queue list
+- `GET /api/appointments/{id}/queue` — queue position for one appointment
+
+## Getting Started
+
 ### Prerequisites
-The following need to be installed in your machine:
-* .NET 8 SDK: https://dotnet.microsoft.com/en-us/download
-* SQLite: https://www.sqlite.org/download.html
-* POSTMAN (Optional) - https://www.postman.com/downloads/
-* Gitbash, but you can also use terminal provided in **Visual Studio Code**
 
-### Setup instructions
-1. Clone the repository
-   * git clone https://github.com/<your-username>/ClinicQueue.git
-   * cd ClinicQueue
-2. Restore dependencies
-   * dotnet restore
+- .NET 8 SDK
+- SQLite (for local dev database)
+- Git
+
+### Local Setup
+
+1. Clone repository
+
+```bash
+git clone https://github.com/<your-username>/ClinicQueue.git
+cd ClinicQueue
+```
+
+2. Restore packages
+
+```bash
+dotnet restore
+```
+
 3. Apply migrations
-   * dotnet ef database migrate
-4. Run the application
-   * dotnet run --project src/ClinicQueue.Api
-5. Access the API
-   * https://localhost:5188/swagger
 
+```bash
+dotnet ef database update --project src/ClinicQueue.Api
+```
+
+4. Run API
+
+```bash
+dotnet run --project src/ClinicQueue.Api
+```
+
+5. Open API docs/Swagger
+
+```text
+https://localhost:5188/swagger
+```
+
+## Testing
+
+### Unit Tests
+
+Run unit tests:
+
+```bash
+dotnet test ClinicQueue.Tests/ClinicQueue.Tests.csproj
+```
+
+### Integration Tests
+
+Run integration tests:
+
+```bash
+dotnet test ClinicQueue.IntegrationTests/ClinicQueue.IntegrationTests.csproj
+```
+
+## Roadmap
+
+- Add patient search by name and contact
+- Implement authentication/authorization (JWT)
+- Add ILogger structured logging
+- Add FluentValidation for request input
+- Add Docker support and containerized deployment
+
+## Contributing
+
+1. Fork the repo
+2. Create feature branch
+3. Add tests for new logic
+4. Open PR with clear description
+
+## Author
+
+Mangaliso Hlatswayo
+
+Software Quality Assurance Engineer | Backend Developer (C#/.NET)
