@@ -73,9 +73,9 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpGet("paged")]
-    public async Task<IActionResult> GetPaged(int page = 1, int pageSize = 10, string? status = null)
+    public async Task<IActionResult> GetPaged(int page = 1, int pageSize = 10, string? status = null, string? sortBy = null, string? sortOrder = "asc")
     {
-        var pagedResult = await _appointmentService.GetPagedAsync(page, pageSize, status);
+        var pagedResult = await _appointmentService.GetPagedAsync(page, pageSize, status, sortBy, sortOrder);
         return Ok(pagedResult);
     }
 

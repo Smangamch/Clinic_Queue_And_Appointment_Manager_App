@@ -142,7 +142,7 @@ public class AppointmentService : IAppointmentService
     /// <summary>
     /// Returns paged appointment results with optional status filtering.
     /// </summary>
-    public async Task<PagedResult<Appointment>> GetPagedAsync(int page, int pageSize, string? status)
+    public async Task<PagedResult<Appointment>> GetPagedAsync(int page, int pageSize, string? status, string? sortBy, string? sortOrder)
     {
         var query = _context.Appointments.AsQueryable();
 
@@ -151,7 +151,33 @@ public class AppointmentService : IAppointmentService
             query = query.Where(a => a.Status == status);
         }
 
+        if(!string.IsNullOrEmpty(sortBy))
+        {
+            if(sortBy == "ScheduledAt")
+            {
+                query = sortOrder == "desc" 
+                ? query.OrderByDescending(a => a.ScheduledAt) 
+                : query.OrderBy(a => a.ScheduledAt);
+            }
+            else if (sortBy == "Status")
+            {
+                query = sortOrder == "desc" 
+                ? query.OrderByDescending(a => a.Status) 
+                : query.OrderBy(a => a.Status);
+            }
+            else
+            {
+                query = query.OrderBy(a => a.ScheduledAt); // Default sorting
+            }
+        }
+        else{
+            query = query.OrderBy(a => a.ScheduledAt); // Default sorting
+        }
+        
+        //Total count before pagination
         var totalRecords = await query.CountAsync();
+
+        // Apply pagination
         var appointments = await query
             .OrderBy(a => a.ScheduledAt)
             .Skip((page - 1) * pageSize)
