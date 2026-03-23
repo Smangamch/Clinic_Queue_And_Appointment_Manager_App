@@ -21,17 +21,38 @@ public class AppointmentService : IAppointmentService
     /// <summary>
     /// Creates a new appointment if no scheduling conflict exists.
     /// </summary>
-    public async Task<Appointment> CreateAsync(Appointment appointment)
+    public async Task<AppointmentResponseDto> CreateAsync(CreateAppointmentDto dto)
     {
-        var exists = await _context.Appointments.AnyAsync(a => a.ScheduledAt == appointment.ScheduledAt);
+        var exists = await _context.Appointments.AnyAsync(a => a.ScheduledAt == dto.ScheduledAt);
         if (exists)
         {
             throw new InvalidOperationException("An appointment is already scheduled at this time.");
         }
 
+        var appointment = new Appointment
+        {
+            Id = Guid.NewGuid(),
+            PatientName = dto.PatientName,
+            PatientContact = dto.PatientContact,
+            ScheduledAt = dto.ScheduledAt,
+            ClinicId = dto.ClinicId,
+            CheckedIn = dto.CheckedIn,
+            Status = dto.Status
+        };
+
         _context.Appointments.Add(appointment);
         await _context.SaveChangesAsync();
-        return appointment;
+
+        return new AppointmentResponseDto
+        {
+            Id = appointment.Id,
+            PatientName = appointment.PatientName,
+            PatientContact = appointment.PatientContact,
+            ScheduledAt = appointment.ScheduledAt,
+            ClinicId = appointment.ClinicId,
+            CheckedIn = appointment.CheckedIn,
+            Status = appointment.Status
+        }; 
     }
 
 
@@ -70,7 +91,7 @@ public class AppointmentService : IAppointmentService
     /// <summary>
     /// Updates appointment details and returns updated entity.
     /// </summary>
-    public async Task<Appointment?> UpdateAsync(Guid id, Appointment updatedAppointment)
+    public async Task<AppointmentResponseDto?> UpdateAsync(Guid id, UpdateAppointmentDto updatedAppointment)
     {
         var appointment = await _context.Appointments.FindAsync(id);
         if (appointment == null)
@@ -86,9 +107,20 @@ public class AppointmentService : IAppointmentService
         appointment.PatientName = updatedAppointment.PatientName;
         appointment.ScheduledAt = updatedAppointment.ScheduledAt;
         appointment.PatientContact = updatedAppointment.PatientContact;
+        appointment.CheckedIn = updatedAppointment.CheckedIn;
+        appointment.Status = updatedAppointment.Status;
 
         await _context.SaveChangesAsync();
-        return appointment;
+        return new AppointmentResponseDto
+        {
+            Id = appointment.Id,
+            PatientName = appointment.PatientName,
+            PatientContact = appointment.PatientContact,
+            ScheduledAt = appointment.ScheduledAt,
+            ClinicId = appointment.ClinicId,
+            CheckedIn = appointment.CheckedIn,
+            Status = appointment.Status
+        };
     }
 
     /// <summary>

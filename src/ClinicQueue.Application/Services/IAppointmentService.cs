@@ -5,13 +5,14 @@ namespace ClinicQueue.Application.Services
 {
     public interface IAppointmentService
     {
-        Task<Appointment> CreateAsync(Appointment appointment);
+        Task<AppointmentResponseDto> CreateAsync(CreateAppointmentDto dto);
         Task<IEnumerable<Appointment>> GetAllAsync();
         Task<Appointment?> GetByIdAsync(Guid id);
         Task<bool> DeleteAsync(Guid id);
-        Task<Appointment?> UpdateAsync(Guid id, Appointment updatedAppointment);
+        Task<AppointmentResponseDto?> UpdateAsync(Guid id, UpdateAppointmentDto updatedAppointment);
         Task<AppointmentQueueDto> GetQueuePositionAsync(Guid id);
         Task<PagedResult<Appointment>> GetPagedAsync(int page, int pageSize, string? status, string? sortBy, string? sortOrder);
         Task<IEnumerable<TodayQueueDto>> GetTodayQueueAsync();
+
     }
 }

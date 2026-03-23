@@ -31,6 +31,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Pipeline
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 

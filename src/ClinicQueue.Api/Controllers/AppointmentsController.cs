@@ -22,9 +22,9 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Appointment appointment)
+    public async Task<IActionResult> Create(CreateAppointmentDto dto)
     {
-        var result = await _appointmentService.CreateAsync(appointment);
+        var result = await _appointmentService.CreateAsync(dto);
         return Ok(result);
     }
 
@@ -52,7 +52,7 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, Appointment updatedAppointment)
+    public async Task<IActionResult> Update(Guid id, UpdateAppointmentDto updatedAppointment)
     {
         var appointment = await _appointmentService.UpdateAsync(id, updatedAppointment);
 
