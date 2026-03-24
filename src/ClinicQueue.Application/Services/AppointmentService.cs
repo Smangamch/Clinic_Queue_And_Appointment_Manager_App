@@ -2,6 +2,7 @@ using ClinicQueue.Domain.Entities;
 using ClinicQueue.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using ClinicQueue.Application.DTOs;
+using Microsoft.Extensions.Logging;
 
 
 namespace ClinicQueue.Application.Services;
@@ -12,10 +13,12 @@ namespace ClinicQueue.Application.Services;
 public class AppointmentService : IAppointmentService
 {
     private readonly ApplicationDbContext _context;
+    private readonly ILogger<AppointmentService> _logger;
 
-    public AppointmentService(ApplicationDbContext context)
+    public AppointmentService(ApplicationDbContext context, ILogger<AppointmentService> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     /// <summary>
@@ -41,6 +44,7 @@ public class AppointmentService : IAppointmentService
         };
 
         _context.Appointments.Add(appointment);
+        _logger.LogInformation("Appointment created successfully.");
         await _context.SaveChangesAsync();
 
         return new AppointmentResponseDto
@@ -61,6 +65,7 @@ public class AppointmentService : IAppointmentService
     /// </summary>
     public async Task<IEnumerable<Appointment>> GetAllAsync()
     {
+        _logger.LogInformation("All appointments retrieved successfully.");
         return await _context.Appointments.AsNoTracking().ToListAsync();
     }
 
@@ -70,6 +75,7 @@ public class AppointmentService : IAppointmentService
     public async Task<Appointment?> GetByIdAsync(Guid id)
     {
         return await _context.Appointments.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+        _logger.LogInformation("Appointment retrieved successfully.");
     }
 
     /// <summary>
@@ -84,6 +90,7 @@ public class AppointmentService : IAppointmentService
         }
 
         _context.Appointments.Remove(appointment);
+        _logger.LogInformation("Appointment deleted successfully.");
         await _context.SaveChangesAsync();
         return true;
     }
@@ -107,17 +114,16 @@ public class AppointmentService : IAppointmentService
         appointment.PatientName = updatedAppointment.PatientName;
         appointment.ScheduledAt = updatedAppointment.ScheduledAt;
         appointment.PatientContact = updatedAppointment.PatientContact;
-        appointment.CheckedIn = updatedAppointment.CheckedIn;
+        appointment.CheckedIn = bool.Parse(updatedAppointment.CheckedIn);
         appointment.Status = updatedAppointment.Status;
 
+        _logger.LogInformation("Appointment updated successfully.");
         await _context.SaveChangesAsync();
         return new AppointmentResponseDto
         {
-            Id = appointment.Id,
             PatientName = appointment.PatientName,
             PatientContact = appointment.PatientContact,
             ScheduledAt = appointment.ScheduledAt,
-            ClinicId = appointment.ClinicId,
             CheckedIn = appointment.CheckedIn,
             Status = appointment.Status
         };
@@ -142,9 +148,11 @@ public class AppointmentService : IAppointmentService
         if (!isValidTransition)
         {
             throw new InvalidOperationException($"Invalid status transition from {appointment.Status} to {newStatus}.");
+            _logger.LogWarning("Invalid status transition attempted.");
         }
 
         appointment.Status = newStatus;
+        _logger.LogInformation("Appointment status updated successfully.");
         await _context.SaveChangesAsync();
         return appointment;
     }
@@ -158,6 +166,7 @@ public class AppointmentService : IAppointmentService
         if (appointment == null)
         {
             throw new KeyNotFoundException("Appointment not found.");
+            _logger.LogWarning("Attempted to get queue position for non-existent appointment.");
         }
 
         // Calculate the queue number by counting how many appointments are scheduled before the current appointment's scheduled time.
@@ -169,6 +178,7 @@ public class AppointmentService : IAppointmentService
             AppointmentId = appointment.Id,
             QueueNumber = queueNumber
         };
+        _logger.LogInformation("Queue position retrieved successfully.");
     }
 
     /// <summary>
@@ -223,6 +233,7 @@ public class AppointmentService : IAppointmentService
             Page = page,
             PageSize = pageSize
         };
+        _logger.LogInformation("Paged appointments retrieved successfully.");
     }
 
     /// <summary>
@@ -245,6 +256,7 @@ public class AppointmentService : IAppointmentService
             ScheduledAt = a.ScheduledAt,
             Status = a.Status
         });
+        _logger.LogInformation("Today's queue retrieved successfully.");
     }
 
 }

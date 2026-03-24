@@ -4,7 +4,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ClinicQueue.Domain.Entities;
-using ClinicQueue.Api.DTOs;
+using ClinicQueue.Application.DTOs;
 using Microsoft.Extensions.Caching.Memory; 
 using ClinicQueue.Application.Services;
 
