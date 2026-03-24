@@ -65,7 +65,7 @@ public class AppointmentService : IAppointmentService
     /// </summary>
     public async Task<IEnumerable<Appointment>> GetAllAsync()
     {
-        _logger.LogInformation("All appointments retrieved successfully.");
+        _logger.LogInformation("Retrieving all appointments.");
         return await _context.Appointments.AsNoTracking().ToListAsync();
     }
 
@@ -74,8 +74,8 @@ public class AppointmentService : IAppointmentService
     /// </summary>
     public async Task<Appointment?> GetByIdAsync(Guid id)
     {
-        return await _context.Appointments.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         _logger.LogInformation("Appointment retrieved successfully.");
+        return await _context.Appointments.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
     }
 
     /// <summary>
@@ -148,7 +148,6 @@ public class AppointmentService : IAppointmentService
         if (!isValidTransition)
         {
             throw new InvalidOperationException($"Invalid status transition from {appointment.Status} to {newStatus}.");
-            _logger.LogWarning("Invalid status transition attempted.");
         }
 
         appointment.Status = newStatus;
@@ -165,20 +164,21 @@ public class AppointmentService : IAppointmentService
         var appointment = await _context.Appointments.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         if (appointment == null)
         {
-            throw new KeyNotFoundException("Appointment not found.");
             _logger.LogWarning("Attempted to get queue position for non-existent appointment.");
+            throw new KeyNotFoundException("Appointment not found.");
         }
 
         // Calculate the queue number by counting how many appointments are scheduled before the current appointment's scheduled time.
         var queueNumber = await _context.Appointments
             .CountAsync(a => a.ScheduledAt < appointment.ScheduledAt) + 1; // +1 to convert from 0-based index to 1-based queue number
 
+        _logger.LogInformation("Queue position retrieved successfully.");
         return new AppointmentQueueDto
         {
             AppointmentId = appointment.Id,
             QueueNumber = queueNumber
         };
-        _logger.LogInformation("Queue position retrieved successfully.");
+        
     }
 
     /// <summary>
@@ -226,6 +226,7 @@ public class AppointmentService : IAppointmentService
             .Take(pageSize)
             .ToListAsync();
 
+        _logger.LogInformation("Paged appointments retrieved successfully.");
         return new PagedResult<Appointment>
         {
             Data = appointments,
@@ -233,7 +234,6 @@ public class AppointmentService : IAppointmentService
             Page = page,
             PageSize = pageSize
         };
-        _logger.LogInformation("Paged appointments retrieved successfully.");
     }
 
     /// <summary>
@@ -249,6 +249,7 @@ public class AppointmentService : IAppointmentService
             .OrderBy(a => a.ScheduledAt)
             .ToListAsync();
 
+        _logger.LogInformation("Today's queue retrieved successfully.");
         return todayAppointments.Select((a, index) => new TodayQueueDto
         {
             QueueNumber = index + 1,
@@ -256,7 +257,55 @@ public class AppointmentService : IAppointmentService
             ScheduledAt = a.ScheduledAt,
             Status = a.Status
         });
-        _logger.LogInformation("Today's queue retrieved successfully.");
     }
 
+    public async Task<PagedResult<AppointmentResponseDto>> QueryAppointmentsAsync(AppointmentQueryDto query)
+    {
+        var appointments = _context.Appointments.AsQueryable();
+
+        // Filtering
+        if (!string.IsNullOrEmpty(query.Status))
+        {
+            appointments = appointments.Where(a => a.Status == query.Status);
+        }
+
+        // Sorting
+        if (query.SortBy?.ToLower() == "ScheduledAt")
+        {
+            appointments = query.SortOrder == "desc"
+                ? appointments.OrderByDescending(a => a.ScheduledAt)
+                : appointments.OrderBy(a => a.ScheduledAt);
+        }
+        else
+        {
+            appointments = appointments.OrderBy(a => a.PatientName);
+        }
+
+        var totalRecords = await appointments.CountAsync();
+
+        _logger.LogInformation("Appointments queried successfully with filters and sorting.");
+        var data = await appointments
+            .Skip((query.Page - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .Select(a => new AppointmentResponseDto
+            {
+                Id = a.Id,
+                PatientName = a.PatientName,
+                PatientContact = a.PatientContact,
+                ScheduledAt = a.ScheduledAt,
+                CheckedIn = a.CheckedIn,
+                ClinicId = a.ClinicId,
+                Status = a.Status
+            })
+            .ToListAsync();
+
+        _logger.LogInformation("Paged appointment query results retrieved successfully.");
+        return new PagedResult<AppointmentResponseDto>
+        {
+            Page = query.Page,
+            PageSize = query.PageSize,
+            TotalRecords = totalRecords,
+            Data = data
+        };
+    }
 }

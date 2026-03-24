@@ -13,6 +13,6 @@ namespace ClinicQueue.Application.Services
         Task<AppointmentQueueDto> GetQueuePositionAsync(Guid id);
         Task<PagedResult<Appointment>> GetPagedAsync(int page, int pageSize, string? status, string? sortBy, string? sortOrder);
         Task<IEnumerable<TodayQueueDto>> GetTodayQueueAsync();
-
+        Task<PagedResult<AppointmentResponseDto>> QueryAppointmentsAsync(AppointmentQueryDto query);
     }
 }

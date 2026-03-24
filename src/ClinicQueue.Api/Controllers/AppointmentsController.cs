@@ -85,5 +85,12 @@ public class AppointmentsController : ControllerBase
         var todayQueue = await _appointmentService.GetTodayQueueAsync();
         return Ok(todayQueue);
     }
+
+    [HttpGet("query")]
+    public async Task<IActionResult> QueryAppointments([FromQuery] AppointmentQueryDto query)
+    {
+        var result = await _appointmentService.QueryAppointmentsAsync(query);
+        return Ok(result);
+    }
 }
 
