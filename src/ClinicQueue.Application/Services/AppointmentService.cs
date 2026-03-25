@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using ClinicQueue.Application.DTOs;
 using Microsoft.Extensions.Logging;
 
-
 namespace ClinicQueue.Application.Services;
 
 /// <summary>
@@ -24,8 +23,10 @@ public class AppointmentService : IAppointmentService
     /// <summary>
     /// Creates a new appointment if no scheduling conflict exists.
     /// </summary>
+    /// <param name="dto">The data transfer object containing appointment details.</param>
     public async Task<AppointmentResponseDto> CreateAsync(CreateAppointmentDto dto)
     {
+        // Check for scheduling conflicts to prevent double-booking
         var exists = await _context.Appointments.AnyAsync(a => a.ScheduledAt == dto.ScheduledAt);
         if (exists)
         {
@@ -72,6 +73,7 @@ public class AppointmentService : IAppointmentService
     /// <summary>
     /// Finds a single appointment by id or returns null when missing.
     /// </summary>
+    /// <param name="id">The unique identifier of the appointment.</param>
     public async Task<Appointment?> GetByIdAsync(Guid id)
     {
         _logger.LogInformation("Appointment retrieved successfully.");
@@ -81,6 +83,7 @@ public class AppointmentService : IAppointmentService
     /// <summary>
     /// Deletes appointment by id; returns false when the record does not exist.
     /// </summary>
+    /// <param name="id">The unique identifier of the appointment to delete.</param>
     public async Task<bool> DeleteAsync(Guid id)
     {
         var appointment = await _context.Appointments.FindAsync(id);
@@ -98,6 +101,8 @@ public class AppointmentService : IAppointmentService
     /// <summary>
     /// Updates appointment details and returns updated entity.
     /// </summary>
+    /// <param name="id">The unique identifier of the appointment to update.</param>
+    /// <param name="updatedAppointment">The data transfer object with updated appointment details.</param>
     public async Task<AppointmentResponseDto?> UpdateAsync(Guid id, UpdateAppointmentDto updatedAppointment)
     {
         var appointment = await _context.Appointments.FindAsync(id);
@@ -106,6 +111,7 @@ public class AppointmentService : IAppointmentService
             return null;
         }
 
+        // Ensure scheduled time is in the future to prevent invalid updates
         if (updatedAppointment.ScheduledAt <= DateTime.UtcNow)
         {
             throw new ArgumentException("Scheduled time must be in the future or cannot be in the past.");
@@ -132,6 +138,8 @@ public class AppointmentService : IAppointmentService
     /// <summary>
     /// Updates appointment status using defined state transitions and enforces business rules.
     /// </summary>
+    /// <param name="id">The unique identifier of the appointment.</param>
+    /// <param name="newStatus">The new status to assign to the appointment.</param>
     public async Task<Appointment?> UpdateStatusAsync(Guid id, string newStatus)
     {
         var appointment = await _context.Appointments.FindAsync(id);
@@ -140,6 +148,7 @@ public class AppointmentService : IAppointmentService
             return null;
         }
 
+        // Enforce business rules: only allow specific status transitions
         bool isValidTransition =
             (appointment.Status == "Pending" && newStatus == "Scheduled") ||
             (appointment.Status == "Scheduled" && newStatus == "CheckedIn") ||
@@ -159,6 +168,7 @@ public class AppointmentService : IAppointmentService
     /// <summary>
     /// Computes queue position for an appointment by counting earlier scheduled appointments.
     /// </summary>
+    /// <param name="id">The unique identifier of the appointment.</param>
     public async Task<AppointmentQueueDto> GetQueuePositionAsync(Guid id)
     {
         var appointment = await _context.Appointments.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
@@ -168,7 +178,7 @@ public class AppointmentService : IAppointmentService
             throw new KeyNotFoundException("Appointment not found.");
         }
 
-        // Calculate the queue number by counting how many appointments are scheduled before the current appointment's scheduled time.
+        // Calculate queue number as count of appointments scheduled before this one + 1
         var queueNumber = await _context.Appointments
             .CountAsync(a => a.ScheduledAt < appointment.ScheduledAt) + 1; // +1 to convert from 0-based index to 1-based queue number
 
@@ -184,6 +194,11 @@ public class AppointmentService : IAppointmentService
     /// <summary>
     /// Returns paged appointment results with optional status filtering.
     /// </summary>
+    /// <param name="page">The page number to retrieve (1-based).</param>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <param name="status">Optional status filter for appointments.</param>
+    /// <param name="sortBy">Optional field to sort by.</param>
+    /// <param name="sortOrder">Optional sort order ('asc' or 'desc').</param>
     public async Task<PagedResult<Appointment>> GetPagedAsync(int page, int pageSize, string? status, string? sortBy, string? sortOrder)
     {
         var query = _context.Appointments.AsQueryable();
@@ -193,6 +208,7 @@ public class AppointmentService : IAppointmentService
             query = query.Where(a => a.Status == status);
         }
 
+        // Apply sorting based on sortBy parameter, default to ScheduledAt ascending
         if(!string.IsNullOrEmpty(sortBy))
         {
             if(sortBy == "ScheduledAt")
@@ -243,6 +259,7 @@ public class AppointmentService : IAppointmentService
     {
         var today = DateTime.UtcNow.Date;
 
+        // Filter appointments scheduled for today and order by time
         var todayAppointments = await _context.Appointments
             .AsNoTracking()
             .Where(a => a.ScheduledAt.Date == today)
@@ -293,6 +310,7 @@ public class AppointmentService : IAppointmentService
 
                 if (orderedQuery == null)
                 {
+                    // First sort field: apply OrderBy or OrderByDescending
                     orderedQuery = field switch
                     {
                         "status" => order == "desc"
@@ -312,6 +330,7 @@ public class AppointmentService : IAppointmentService
                 }
                 else
                 {
+                    // Subsequent sort fields: apply ThenBy or ThenByDescending
                     orderedQuery = field switch
                     {
                         "status" => order == "desc"
