@@ -259,8 +259,14 @@ public class AppointmentService : IAppointmentService
         });
     }
 
+    /// <summary>
+    /// Performs complex querying of appointments with filtering, sorting, and pagination based on the provided query parameters.
+    /// </summary>
+    /// <param name="query">The query parameters for filtering, sorting, and pagination.</param>
+    /// <returns>A paged result containing the queried appointments.</returns>
     public async Task<PagedResult<AppointmentResponseDto>> QueryAppointmentsAsync(AppointmentQueryDto query)
     {
+        // Start with all appointments as a queryable to allow for filtering, sorting, and pagination
         var appointments = _context.Appointments.AsQueryable();
 
         // Filtering
@@ -270,15 +276,62 @@ public class AppointmentService : IAppointmentService
         }
 
         // Sorting
-        if (query.SortBy?.ToLower() == "ScheduledAt")
+        if (!string.IsNullOrWhiteSpace(query.SortBy))
         {
-            appointments = query.SortOrder == "desc"
-                ? appointments.OrderByDescending(a => a.ScheduledAt)
-                : appointments.OrderBy(a => a.ScheduledAt);
-        }
-        else
-        {
-            appointments = appointments.OrderBy(a => a.PatientName);
+            // Support multiple sort fields separated by commas, e.g., "status,scheduledAt"
+            var sortFields = query.SortBy.Split(',');
+            var sortOrders = query.SortOrder?.Split(',') ?? new string[sortFields.Length];
+
+            // Dynamically build the ordered query based on the specified sort fields and orders
+            IOrderedQueryable<Appointment>? orderedQuery = null;
+
+            // Use a loop to apply sorting for each specified field
+            for (int i = 0; i < sortFields.Length; i++)
+            {
+                var field = sortFields[i].Trim().ToLower();
+                var order = sortOrders.Length > i ? sortOrders[i].Trim().ToLower() : "asc";
+
+                if (orderedQuery == null)
+                {
+                    orderedQuery = field switch
+                    {
+                        "status" => order == "desc"
+                            ? appointments.OrderByDescending(a => a.Status)
+                            : appointments.OrderBy(a => a.Status),
+
+                        "scheduledat" => order == "desc"
+                            ? appointments.OrderByDescending(a => a.ScheduledAt)
+                            : appointments.OrderBy(a => a.ScheduledAt),
+
+                        "patientname" => order == "desc"
+                            ? appointments.OrderByDescending(a => a.PatientName)
+                            : appointments.OrderBy(a => a.PatientName),
+
+                        _ => appointments.OrderBy(a => a.ScheduledAt)
+                    };
+                }
+                else
+                {
+                    orderedQuery = field switch
+                    {
+                        "status" => order == "desc"
+                            ? orderedQuery.ThenByDescending(a => a.Status)
+                            : orderedQuery.ThenBy(a => a.Status),
+
+                        "scheduledat" => order == "desc"
+                            ? orderedQuery.ThenByDescending(a => a.ScheduledAt)
+                            : orderedQuery.ThenBy(a => a.ScheduledAt),
+
+                        "patientname" => order == "desc"
+                            ? orderedQuery.ThenByDescending(a => a.PatientName)
+                            : orderedQuery.ThenBy(a => a.PatientName),
+
+                        _ => orderedQuery
+                    };
+                }
+            }
+            // If no valid sort fields were provided, default to sorting by ScheduledAt
+            appointments = orderedQuery ?? appointments;
         }
 
         var totalRecords = await appointments.CountAsync();
