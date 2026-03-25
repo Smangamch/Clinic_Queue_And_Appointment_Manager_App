@@ -3,6 +3,7 @@ using ClinicQueue.Application.DTOs;
 
 namespace ClinicQueue.Application.Services
 {
+    // Interface defining appointment management operations, including creation, retrieval, updating, deletion, and queue position calculation.
     public interface IAppointmentService
     {
         Task<AppointmentResponseDto> CreateAsync(CreateAppointmentDto dto);
