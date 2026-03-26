@@ -2,7 +2,9 @@
 
 ## Overview
 
-ClinicQueue is a backend API for managing clinic appointment scheduling, queue position calculation, and appointment status workflow. It is built with modern C#/.NET architecture principles and designed for maintainability, testability, and real-world clinical operations.
+This project is a backend RESTful API developed using ASP.NET Core (.NET 8) and Clean Architecture principles. The system is designed to modernize how public clinics manage patient appointments and queue flow by replacing manual booking methods with a structured and scalable digital solution.
+
+The API allows clinics to create, update, and manage patient appointments while also providing real-time queue positioning, status tracking, and advanced data querying features.
 
 ## Table of Contents
 
@@ -17,34 +19,30 @@ ClinicQueue is a backend API for managing clinic appointment scheduling, queue p
 
 ## Features
 
-### Appointment Management
+### Key Features
 
-- Create, read, update, and delete appointments
-- Prevents scheduling conflicts (double-booking)
-- Business validation for required fields and date/time rules
+- Create, update, delete, and manage clinic appointments
+- Real-time queue number calculation based on scheduled time
+- Status-based appointment filtering (Scheduled, Checked-In, Completed, Cancelled)
+- Advanced querying with filtering, multi-field sorting, and pagination
+- Global exception handling middleware
+- Structured logging using ASP.NET Core built-in logging
+- Clean Architecture structure (Domain, Application, Infrastructure, API layers)
+- DTO-based request and response handling
+- Fully testable API using Swagger
 
-### Queue Management
+### Technologies Used
 
-- Computes dynamic daily queue position by appointment time
-- Returns daily queue list with position and status
-- Supports queue lookup by appointment ID
+- ASP.NET Core (.NET 8)
+- Entity Framework Core
+- Clean Architecture
+- LINQ (advanced filtering, sorting, and pagination)
+- Swagger / OpenAPI
+- C#
 
-### Status Workflow
+### Purpose of the Project
 
-- Enforces controlled transitions:
-  - `Pending` → `Scheduled` → `CheckedIn` → `Completed`
-- Protects against invalid status updates
-
-### Pagination and Filtering
-
-- Supports paged responses with `page` and `pageSize`
-- Supports filtering by status and date range
-- Combines filtering and pagination in one endpoint
-
-### API Documentation
-
-- Integrated Swagger UI for interactive API exploration
-- Automatically generated OpenAPI documentation
+Many public clinics still rely on manual appointment booking methods, which often result in scheduling conflicts, long waiting times, and poor queue management. This system aims to solve that problem by providing a scalable backend service that can be integrated into web or mobile applications.
 
 ## Architecture
 
