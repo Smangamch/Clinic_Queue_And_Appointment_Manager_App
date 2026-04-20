@@ -33,6 +33,11 @@ public class AppointmentService : IAppointmentService
             throw new InvalidOperationException("An appointment is already scheduled at this time.");
         }
 
+        if (dto.ScheduledAt <= DateTime.UtcNow)
+        {
+            throw new ArgumentException("Scheduled time must be in the future.");
+        }
+
         var appointment = new Appointment
         {
             Id = Guid.NewGuid(),
