@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ClinicQueue.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+30b65148cef36023902e1b13208adfd4c9347bcb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2576fa0486d6c761b298d77f100af0100d10a81e")]
 [assembly: System.Reflection.AssemblyProductAttribute("ClinicQueue.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ClinicQueue.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
