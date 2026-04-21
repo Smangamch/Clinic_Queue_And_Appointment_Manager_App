@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ClinicQueue.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e45fdbb3cf8b43a4ae18d397f709ffa6d67661ce")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cd700b1c5b824ff37f7893935645c788ec44c997")]
 [assembly: System.Reflection.AssemblyProductAttribute("ClinicQueue.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ClinicQueue.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
