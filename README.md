@@ -22,16 +22,30 @@ A full-stack web application designed to modernize clinic appointment scheduling
 - Real-time UI updates after creation
 - API integration with backend
 
+### Purpose of the Project
+
+Many public clinics still rely on manual appointment booking methods, which often result in scheduling conflicts, long waiting times, and poor queue management. This system aims to solve that problem by providing a scalable backend service that can be integrated into web or mobile applications.
+
 ## Tech Stack
 
 ### Backend:
 - .NET 8 Web API
 - Entity Framework Core
 - SQLite
+- Clean Architecture
+- LINQ (advanced filtering, sorting, and pagination)
 
 ### Frontend:
 - React (Vite)
 - TypeScript
+
+## Architecture
+
+- ASP.NET Core Web API
+- Clean architecture separation (API, Application, Domain, Infrastructure)
+- Entity Framework Core (EF Core)
+- DTO-based API contract
+- Async/await for scalable I/O operations
 
 ## API Endpoints
 
@@ -85,6 +99,47 @@ Tested scenarios:
 - Real-time queue updates (WebSockets)
 - Authentication & authorization
 - Multi-clinic dashboard
+
+## Getting Started
+
+### Prerequisites
+
+- .NET 8 SDK
+- SQLite (for local dev database)
+- Git
+
+### Local Setup
+
+1. Clone repository
+
+```bash
+git clone https://github.com/<your-username>/ClinicQueue.git
+cd ClinicQueue
+```
+
+2. Restore packages
+
+```bash
+dotnet restore
+```
+
+3. Apply migrations
+
+```bash
+dotnet ef database update --project src/ClinicQueue.Api
+```
+
+4. Run API
+
+```bash
+dotnet run --project src/ClinicQueue.Api
+```
+
+5. Open API docs/Swagger
+
+```text
+https://localhost:5188/swagger
+```
 
 ## Author
 
