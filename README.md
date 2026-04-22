@@ -2,6 +2,16 @@
 
 A full-stack web application designed to modernize clinic appointment scheduling, queue management, and patient flow handling.
 
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [API Endpoints](#api-endpoints)
+- [Testing](#testing)
+- [Getting Started](#getting-started)
+- [Author](#author)
+
 ##  Features
 
 ### Backend (ASP.NET Core)
