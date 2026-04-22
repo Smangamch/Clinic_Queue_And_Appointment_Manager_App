@@ -1,149 +1,92 @@
-# ClinicQueue App
+# Clinic Queue & Appointment Manager
 
-## Overview
+A full-stack web application designed to modernize clinic appointment scheduling, queue management, and patient flow handling.
 
-This project is a backend RESTful API developed using ASP.NET Core (.NET 8) and Clean Architecture principles. The system is designed to modernize how public clinics manage patient appointments and queue flow by replacing manual booking methods with a structured and scalable digital solution.
+##  Features
 
-The API allows clinics to create, update, and manage patient appointments while also providing real-time queue positioning, status tracking, and advanced data querying features.
+### Backend (ASP.NET Core)
+- Appointment creation with validation (no double booking)
+- Status lifecycle management: Pending → Scheduled → CheckedIn → Completed
+- Queue position calculation
+- Pagination support
+- Advanced querying:
+  - Filtering (status)
+  - Sorting (date)
+  - Pagination (page & size)
+- Global exception handling
+- Structured logging
 
-## Table of Contents
+### Frontend (React + Vite + TypeScript)
+- Fetch and display appointments
+- Create new appointments via form
+- Real-time UI updates after creation
+- API integration with backend
 
-- [Features](#features)
-- [Architecture](#architecture)
-- [API Endpoints](#api-endpoints)
-- [Getting Started](#getting-started)
-- [Testing](#testing)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [Author](#author)
+## Tech Stack
 
-## Features
-
-### Key Features
-
-- Create, update, delete, and manage clinic appointments
-- Real-time queue number calculation based on scheduled time
-- Status-based appointment filtering (Scheduled, Checked-In, Completed, Cancelled)
-- Advanced querying with filtering, multi-field sorting, and pagination
-- Global exception handling middleware
-- Structured logging using ASP.NET Core built-in logging
-- Clean Architecture structure (Domain, Application, Infrastructure, API layers)
-- DTO-based request and response handling
-- Fully testable API using Swagger
-
-### Technologies Used
-
-- ASP.NET Core (.NET 8)
+### Backend:
+- .NET 8 Web API
 - Entity Framework Core
-- Clean Architecture
-- LINQ (advanced filtering, sorting, and pagination)
-- Swagger / OpenAPI
-- C#
+- SQLite
 
-### Purpose of the Project
-
-Many public clinics still rely on manual appointment booking methods, which often result in scheduling conflicts, long waiting times, and poor queue management. This system aims to solve that problem by providing a scalable backend service that can be integrated into web or mobile applications.
-
-## Architecture
-
-- ASP.NET Core Web API
-- Clean architecture separation (API, Application, Domain, Infrastructure)
-- Entity Framework Core (EF Core)
-- DTO-based API contract
-- Async/await for scalable I/O operations
+### Frontend:
+- React (Vite)
+- TypeScript
 
 ## API Endpoints
 
-### Appointments
+### Get Paginated Appointments
+`GET /api/appointments/paged?page=1&pageSize=5`
 
-- `GET /api/appointments`
-- `GET /api/appointments/{id}`
-- `POST /api/appointments`
-- `PUT /api/appointments/{id}`
-- `DELETE /api/appointments/{id}`
+### Create Appointment
+`POST /api/appointments`
 
-### Advanced & Utility
+### Advanced Query
+`GET /api/appointments/query?SortBy=scheduledAt&SortOrder=asc&Status=Scheduled&page=1&pageSize=5`
 
-- `GET /api/appointments/paged` — pagination + filtering
-- `GET /api/appointments/today` — today's queue list
-- `GET /api/appointments/{id}/queue` — queue position for one appointment
+## ⚙️ Setup Instructions
 
-## Getting Started
-
-### Prerequisites
-
-- .NET 8 SDK
-- SQLite (for local dev database)
-- Git
-
-### Local Setup
-
-1. Clone repository
-
+### Backend
 ```bash
-git clone https://github.com/<your-username>/ClinicQueue.git
-cd ClinicQueue
+cd src/ClinicQueue.Api
+dotnet run
 ```
 
-2. Restore packages
+Runs on: http://localhost:5188
 
+### Frontend
 ```bash
-dotnet restore
+cd frontend
+npm install
+npm run dev
 ```
 
-3. Apply migrations
-
-```bash
-dotnet ef database update --project src/ClinicQueue.Api
-```
-
-4. Run API
-
-```bash
-dotnet run --project src/ClinicQueue.Api
-```
-
-5. Open API docs/Swagger
-
-```text
-https://localhost:5188/swagger
-```
+Runs on: http://localhost:5173
 
 ## Testing
 
-### Unit Tests
+Swagger UI available at: http://localhost:5188/swagger
 
-Run unit tests:
+Tested scenarios:
+- Valid appointment creation
+- Duplicate time validation
+- Past date rejection
+- Pagination correctness
 
-```bash
-dotnet test ClinicQueue.Tests/ClinicQueue.Tests.csproj
-```
+## System Design Considerations
+- Prevents double booking
+- Handles multiple concurrent users
+- Designed for scalability across multiple clinics
+- Clean separation of concerns (API, Application, Domain)
 
-### Integration Tests
-
-Run integration tests:
-
-```bash
-dotnet test ClinicQueue.IntegrationTests/ClinicQueue.IntegrationTests.csproj
-```
-
-## Roadmap
-
-- Add patient search by name and contact
-- Implement authentication/authorization (JWT)
-- Add ILogger structured logging
-- Add FluentValidation for request input
-- Add Docker support and containerized deployment
-
-## Contributing
-
-1. Fork the repo
-2. Create feature branch
-3. Add tests for new logic
-4. Open PR with clear description
+## Future Improvements
+- Frontend pagination controls
+- Filtering UI
+- Real-time queue updates (WebSockets)
+- Authentication & authorization
+- Multi-clinic dashboard
 
 ## Author
 
-Mangaliso Hlatswayo
-
-Software Quality Assurance Engineer | Backend Developer (C#/.NET)
+Mangaliso Hlatswayo  
+Full-Stack Software Developer | QA Engineer
