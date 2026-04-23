@@ -22,11 +22,15 @@ type PagedResult = {
 };
 
 function App() {
-  // State for appointments, loading status, and form data
+  // State variables for managing appointments, loading status, messages, errors, pagination, and form data
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(5);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const totalPages = Math.ceil(totalRecords / pageSize);
   const [form, setForm] = useState({
     patientName: "",
     patientContact: "",
@@ -95,18 +99,18 @@ function App() {
 
   // Fetch appointments on component mount
   useEffect(() => {
-    fetch("http://localhost:5188/api/appointments/query?Page=1&PageSize=10")
+    fetch(`http://localhost:5188/api/appointments/query?page=${page}&pageSize=${pageSize}`)
       .then((res) => res.json())
       .then((data: PagedResult) => {
-        console.log("API RESPONSE:", data); // For debugging - check the structure of the response
         setAppointments(data.data); // Assuming the API returns { data: Appointment[], total: number }
+        setTotalRecords(data.totalRecords);
         setLoading(false);
       })
       .catch((err) => {
         console.error("Error fetching appointments:", err);
         setLoading(false);
       });
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     if (!message) return;
@@ -210,6 +214,26 @@ function App() {
           </tbody>
         </table>
       )}
+
+        <div style={{ marginTop: "20px" }}>
+          <button 
+            onClick={() => setPage(prev => prev - 1)} 
+            disabled={page === 1}
+          >
+            Previous
+          </button>
+
+          <span style={{ margin: "0 10px" }}>
+            Page {page} of {totalPages}
+          </span>
+
+          <button 
+            onClick={() => setPage(prev => prev + 1)} 
+            disabled={page === totalPages}
+          >
+            Next
+          </button>
+      </div>
     </div>
   );
 }
