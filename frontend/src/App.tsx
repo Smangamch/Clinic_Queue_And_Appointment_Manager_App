@@ -25,6 +25,8 @@ function App() {
   // State for appointments, loading status, and form data
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
     patientName: "",
     patientContact: "",
@@ -50,6 +52,10 @@ function App() {
     e.preventDefault();
 
     try {
+      // Reset previous messages
+      setError("");
+      setMessage("");
+
       const response = await fetch("http://localhost:5188/api/appointments", {
         method: "POST",
         headers: {
@@ -62,13 +68,14 @@ function App() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to create appointment");
+        const errText = await response.text(); // 🔹 get backend error
+        throw new Error(errText || "Failed to create appointment");
       }
 
       const newAppointment = await response.json();
-
       // Update UI immediately
       setAppointments(prev => [newAppointment, ...prev]);
+      setMessage("Appointment created successfully");
 
       // Reset form
       setForm({
@@ -80,13 +87,15 @@ function App() {
         checkedIn: false
       });
 
-    } catch (error) {
-      console.error("Error:", error);
+    } catch (err: any) {
+      setError(err.message);
+      console.error("Error:", err);
     }
-};
+  };  
 
+  // Fetch appointments on component mount
   useEffect(() => {
-    fetch("http://localhost:5188/api/appointments/query?Page=1&PageSize=5")
+    fetch("http://localhost:5188/api/appointments/query?Page=1&PageSize=10")
       .then((res) => res.json())
       .then((data: PagedResult) => {
         console.log("API RESPONSE:", data); // For debugging - check the structure of the response
@@ -99,14 +108,29 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    if (!message) return;
+
+    const timer = setTimeout(() => {
+      setMessage("");
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [message]);
+
+  // Render the UI
   return (
     <div style={{ padding: "20px" }}>
       <h1>Clinic Appointments</h1>
 
+      {message && <p style={{ color: "green" }}>{message}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <div className="form-container">
       <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
         <input
           name="patientName"
-          placeholder="Patient's Name"
+          placeholder="Name and Surname"
           value={form.patientName}
           onChange={handleChange}
           required
@@ -155,6 +179,7 @@ function App() {
 
         <button type="submit">Create</button>
       </form>
+      </div>
 
       {loading ? (
         <p>Loading...</p>
