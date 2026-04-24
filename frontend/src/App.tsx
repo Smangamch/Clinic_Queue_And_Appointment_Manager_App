@@ -23,15 +23,16 @@ type PagedResult = {
 
 function App() {
   // State variables for managing appointments, loading status, messages, errors, pagination, and form data
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [pagedResult, setPagedResult] = useState<PagedResult | null>(null);
+  const appointments = pagedResult?.data || [];
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize] = useState(5);
-  const [totalRecords, setTotalRecords] = useState(0);
+  const totalRecords = pagedResult?.totalRecords || 0;
   const totalPages = Math.ceil(totalRecords / pageSize);
-  const [statusFilter, setStatusFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
   const [form, setForm] = useState({
     patientName: "",
     patientContact: "",
@@ -77,10 +78,11 @@ function App() {
         throw new Error(errText || "Failed to create appointment");
       }
 
-      const newAppointment = await response.json();
-      // Update UI immediately
-      setAppointments(prev => [newAppointment, ...prev]);
+      // Consume response but don't store since we'll refetch
+      await response.json();
+      // Reset to first page to show new appointment
       setMessage("Appointment created successfully");
+      setPage(1);
 
       // Reset form
       setForm({
@@ -100,24 +102,30 @@ function App() {
 
   // Fetch appointments on component mount
   useEffect(() => {
-    let url = `http://localhost:5188/api/appointments/query?page=${page}&pageSize=${pageSize}`;
+  const fetchAppointments = async () => {
+    setLoading(true);
 
-    if (statusFilter !== "All") {
-      url += `&status=${statusFilter}`;
+    try {
+      let url = `http://localhost:5188/api/appointments/query?page=${page}&pageSize=${pageSize}`;
+
+      if (statusFilter !== "All") {
+        url += `&status=${statusFilter}`;
+      }
+
+      const res = await fetch(url);
+      const data: PagedResult = await res.json();
+
+      setPagedResult(data);
+
+    } catch (err) {
+      console.error("Error fetching appointments:", err);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    fetch(url)
-      .then((res) => res.json())
-      .then(data => {
-        setAppointments(data.data); // Assuming the API returns { data: Appointment[], total: number }
-        setTotalRecords(data.totalRecords);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching appointments:", err);
-        setLoading(false);
-      });
-  }, [page,statusFilter]);
+  fetchAppointments();
+}, [page, statusFilter]);
 
   useEffect(() => {
     if (!message) return;
