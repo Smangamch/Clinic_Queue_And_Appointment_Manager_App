@@ -31,6 +31,7 @@ function App() {
   const [pageSize] = useState(5);
   const [totalRecords, setTotalRecords] = useState(0);
   const totalPages = Math.ceil(totalRecords / pageSize);
+  const [statusFilter, setStatusFilter] = useState("");
   const [form, setForm] = useState({
     patientName: "",
     patientContact: "",
@@ -99,9 +100,15 @@ function App() {
 
   // Fetch appointments on component mount
   useEffect(() => {
-    fetch(`http://localhost:5188/api/appointments/query?page=${page}&pageSize=${pageSize}`)
+    let url = `http://localhost:5188/api/appointments/query?page=${page}&pageSize=${pageSize}`;
+
+    if (statusFilter !== "All") {
+      url += `&status=${statusFilter}`;
+    }
+
+    fetch(url)
       .then((res) => res.json())
-      .then((data: PagedResult) => {
+      .then(data => {
         setAppointments(data.data); // Assuming the API returns { data: Appointment[], total: number }
         setTotalRecords(data.totalRecords);
         setLoading(false);
@@ -110,7 +117,7 @@ function App() {
         console.error("Error fetching appointments:", err);
         setLoading(false);
       });
-  }, [page]);
+  }, [page,statusFilter]);
 
   useEffect(() => {
     if (!message) return;
@@ -184,6 +191,19 @@ function App() {
         <button type="submit">Create</button>
       </form>
       </div>
+
+      <select
+        value={statusFilter}
+        onChange={(e) => {
+          setPage(1);
+          setStatusFilter(e.target.value);
+        }}
+      >
+        <option value="All">All</option>
+        <option value="Scheduled">Scheduled</option>
+        <option value="Incomplete">Incomplete</option>
+        <option value="Completed">Completed</option> 
+      </select>
 
       {loading ? (
         <p>Loading...</p>
