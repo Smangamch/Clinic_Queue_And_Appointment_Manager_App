@@ -33,6 +33,7 @@ function App() {
   const totalRecords = pagedResult?.totalRecords || 0;
   const totalPages = Math.ceil(totalRecords / pageSize);
   const [statusFilter, setStatusFilter] = useState("All");
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState({
     patientName: "",
     patientContact: "",
@@ -54,6 +55,45 @@ function App() {
   }));
 };
 
+const handleEdit = (appointment: Appointment) => {
+  setForm({
+    patientName: appointment.patientName,
+    patientContact: appointment.patientContact,
+    clinicId: appointment.clinicId,
+    checkedIn: appointment.checkedIn,
+    scheduledAt: appointment.scheduledAt.slice(0, 16),
+    status: appointment.status
+  });
+
+  setEditingId(appointment.id);
+};
+
+const handleDelete = async (id: string) => {
+  if (!window.confirm("Delete this appointment?")) return;
+
+  try {
+    const response = await fetch(`http://localhost:5188/api/appointments/${id}`, {
+      method: "DELETE"
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete appointment");
+    }
+
+    setPagedResult(prev => prev ? 
+      {
+        ...prev,
+        data: prev.data.filter(a => a.id !== id),
+        totalRecords: prev.totalRecords - 1
+      } : prev
+    );  
+    setMessage("Appointment deleted successfully");
+
+  } catch (err: any) {
+    setError(err.message);
+  }
+};
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -62,8 +102,14 @@ function App() {
       setError("");
       setMessage("");
 
-      const response = await fetch("http://localhost:5188/api/appointments", {
-        method: "POST",
+      const url = editingId
+          ? `http://localhost:5188/api/appointments/${editingId}`
+          : "http://localhost:5188/api/appointments";
+
+      const method = editingId ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method: method,
         headers: {
           "Content-Type": "application/json"
         },
@@ -73,13 +119,28 @@ function App() {
         })
       });
 
-      if (!response.ok) {
-        const errText = await response.text(); // 🔹 get backend error
-        throw new Error(errText || "Failed to create appointment");
+      const savedAppointment: Appointment = await response.json();
+
+      if (editingId) {
+        setPagedResult(prev => prev ? 
+          {
+            ...prev,
+            data: prev.data.map(a => a.id === editingId ? savedAppointment : a)
+          } : prev
+        );
+        setEditingId(null);
+        setMessage("Appointment updated successfully");
+      }else {
+        setPagedResult(prev => prev
+          ? {
+              ...prev,
+              data: [savedAppointment, ...prev.data],
+              totalRecords: prev.totalRecords + 1
+          } : prev
+        );
+        setMessage("Appointment created successfully");
       }
 
-      // Consume response but don't store since we'll refetch
-      await response.json();
       // Reset to first page to show new appointment
       setMessage("Appointment created successfully");
       setPage(1);
@@ -196,7 +257,9 @@ function App() {
           <option value="Completed">Completed</option>
         </select>
 
-        <button type="submit">Create</button>
+        <button type="submit">
+          {editingId ? "Update" : "Create"}
+        </button>
       </form>
       </div>
 
@@ -225,6 +288,7 @@ function App() {
               <th>Checked In</th>
               <th>Date</th>
               <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
 
@@ -237,6 +301,13 @@ function App() {
                 <td>{a.checkedIn ? "Yes" : "No"}</td>
                 <td>{new Date(a.scheduledAt).toLocaleString()}</td>
                 <td>{a.status || "N/A"}</td>
+                <td>
+                  <button onClick={() => handleEdit(a)}>Edit</button>
+                  <button onClick={() => handleDelete(a.id)}
+                   style={{ marginLeft: "10px", color: "red" }}>
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
