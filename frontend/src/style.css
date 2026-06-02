@@ -93,22 +93,207 @@ form {
 
 input,
 select {
-  padding: 6px;
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 8px;
+  font: inherit;
 }
 
 button {
-  padding: 6px 12px;
-  background-color: #4CAF50;
+  padding: 8px 14px;
+  background-color: #4caf50;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  font: inherit;
 }
 
 button:hover {
   background-color: #45a049;
+}
+
+.dashboard-page {
+  display: grid;
+  gap: 24px;
+}
+
+.dashboard-hero {
+  padding: 26px 28px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+}
+
+.dashboard-subtitle {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.dashboard-value {
+  margin: 0.75rem 0 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+}
+
+.card-hero h2,
+.card-actions h2 {
+  margin-top: 0;
+}
+
+.card-actions p {
+  margin: 10px 0 18px;
+  color: #475569;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.action-grid button {
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  font-weight: 600;
+}
+
+.action-grid button:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.primary-button,
+.secondary-button {
+  border-radius: 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primary-button {
+  background: #2563eb;
+  padding: 12px 18px;
+}
+
+.secondary-button {
+  background: #10b981;
+  padding: 10px 16px;
+}
+
+.primary-button:hover,
+.secondary-button:hover {
+  opacity: 0.92;
+}
+
+.appointments-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.appointments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.appointments-form-card {
+  display: grid;
+  gap: 18px;
+  margin: 20px 0;
+  padding: 26px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+}
+
+.appointments-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(250px, 1fr));
+  gap: 18px;
+}
+
+.appointments-form-actions {
+  align-items: center;
+}
+
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #f8fafc;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+}
+
+input,
+select {
+  padding: 14px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  font: inherit;
+  background: #f8fafc;
+}
+
+input:focus,
+select:focus,
+button:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.appointments-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.appointments-filter label {
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.appointments-pagination {
+  display: flex;
+  gap: 12px;
 }
 
 table {
@@ -118,12 +303,16 @@ table {
 
 th,
 td {
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 12px 10px;
+  border: 1px solid #d1d5db;
   text-align: left;
 }
 
 th {
-  background-color: #f4f4f4;
+  background-color: #f8fafc;
+}
+
+.appointments-page table tr:hover {
+  background: rgba(37, 99, 235, 0.05);
 }
 

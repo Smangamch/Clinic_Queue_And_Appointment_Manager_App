@@ -1,0 +1,27 @@
+.app-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  background: #f3f4f6;
+  transition: grid-template-columns 240ms ease;
+}
+
+.app-shell.collapsed {
+  grid-template-columns: 88px 1fr;
+}
+
+.app-content {
+  padding: 28px;
+  transition: padding 240ms ease;
+}
+
+@media (max-width: 900px) {
+  .app-shell,
+  .app-shell.collapsed {
+    grid-template-columns: 1fr;
+  }
+
+  .app-content {
+    padding: 18px;
+  }
+}
