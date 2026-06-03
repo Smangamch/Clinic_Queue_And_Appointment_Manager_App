@@ -271,15 +271,20 @@ export function Appointments() {
             <tbody>
               {appointments.map(a => (
                 <tr key={a.id}>
-                  <td>{a.patientName}</td>
-                  <td>{a.patientContact}</td>
-                  <td>{a.clinicId}</td>
+                  <td><span className="truncate" title={a.patientName}>{a.patientName}</span></td>
+                  <td><span className="truncate" title={a.patientContact}>{a.patientContact}</span></td>
+                  <td><span className="truncate" title={a.clinicId}>{a.clinicId}</span></td>
                   <td>{a.checkedIn ? "Yes" : "No"}</td>
                   <td>{new Date(a.scheduledAt).toLocaleString()}</td>
                   <td>{a.status || "N/A"}</td>
-                  <td>
-                    <button onClick={() => handleEdit(a)}>Edit</button>
-                    <button onClick={() => handleDelete(a.id)} style={{ marginLeft: "10px", color: "white", background: "#dc2626" }}>Delete</button>
+                  <td className="actions-col">
+                    <details className="action-menu">
+                      <summary className="action-compact" aria-label="Actions">⋯</summary>
+                      <div className="action-group">
+                        <button className="edit-btn" onClick={() => handleEdit(a)}>Edit</button>
+                        <button className="delete-btn" onClick={() => handleDelete(a.id)}>Delete</button>
+                      </div>
+                    </details>
                   </td>
                 </tr>
               ))}

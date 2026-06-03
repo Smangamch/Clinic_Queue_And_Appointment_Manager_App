@@ -1,7 +1,10 @@
 .app-shell {
   display: grid;
   grid-template-columns: 260px 1fr;
+  grid-template-areas: "sidebar main";
+  gap: 24px;
   min-height: 100vh;
+  min-width: 0;
   background: #f3f4f6;
   transition: grid-template-columns 240ms ease;
 }
@@ -10,8 +13,14 @@
   grid-template-columns: 88px 1fr;
 }
 
+.sidebar {
+  grid-area: sidebar;
+}
+
 .app-content {
-  padding: 28px;
+  grid-area: main;
+  min-width: 0;
+  padding: 24px;
   transition: padding 240ms ease;
 }
 
@@ -19,6 +28,9 @@
   .app-shell,
   .app-shell.collapsed {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "sidebar"
+      "main";
   }
 
   .app-content {

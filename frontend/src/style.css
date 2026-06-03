@@ -1,5 +1,5 @@
 :root {
-  --text: #6b6375;
+  --text: #1a1a1a;
   --text-h: #08060d;
   --bg: #fff;
   --border: #e5e4e7;
@@ -51,7 +51,7 @@ h1,
 h2 {
   font-family: var(--heading);
   font-weight: 500;
-  color: var(--text-h);
+  color: #1a1a1a;
   margin: 0;
 }
 
@@ -97,6 +97,8 @@ select {
   border: 1px solid #ccc;
   border-radius: 8px;
   font: inherit;
+  color: #1a1a1a;
+  background-color: #ffffff;
 }
 
 button {
@@ -258,6 +260,7 @@ button:hover {
   background: #f8fafc;
   border: 1px solid #d1d5db;
   border-radius: 12px;
+  color: #1a1a1a;
 }
 
 input,
@@ -267,6 +270,7 @@ select {
   border-radius: 16px;
   font: inherit;
   background: #f8fafc;
+  color: #1a1a1a;
 }
 
 input:focus,
@@ -314,5 +318,113 @@ th {
 
 .appointments-page table tr:hover {
   background: rgba(37, 99, 235, 0.05);
+}
+
+/* Actions column: keep buttons stacked and prevent overlap when cells are long */
+.appointments-page th:last-child,
+.appointments-page td.actions-col {
+  width: 150px;
+  min-width: 120px;
+  vertical-align: middle;
+  position: relative; /* so the floating menu can be positioned */
+}
+
+.action-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start; /* align actions to the left */
+}
+
+.action-group button {
+  display: inline-block;
+  width: 84px;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+}
+
+.action-group .edit-btn {
+  background: #16a34a; /* green */
+}
+
+.action-group .delete-btn {
+  background: #dc2626; /* red */
+}
+
+/* Allow table cells to shrink correctly inside flexible containers */
+table {
+  table-layout: auto;
+}
+
+/* Compact actions: show single icon on small screens */
+.action-menu {
+  display: block;
+}
+.action-menu summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-block; /* show summary icon on all sizes */
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  padding: 4px 8px;
+}
+.action-menu[open] summary {
+  /* when open, keep summary visible */
+  display: inline-block;
+}
+
+@media (max-width: 900px) {
+  .appointments-page th:last-child,
+  .appointments-page td.actions-col {
+    width: 64px;
+    min-width: 64px;
+  }
+
+  /* hide full buttons on small screens until details opened */
+  .action-group {
+    display: none;
+  }
+
+  .action-menu summary {
+    display: inline-block;
+    color: var(--text);
+  }
+
+  .action-menu[open] .action-group {
+    display: flex;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(15,23,42,0.08);
+    z-index: 30;
+    right: 16px;
+    top: 40px;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* Truncate long table cells and show full value via title tooltip */
+.appointments-page td .truncate,
+.appointments-page th .truncate {
+  display: inline-block;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .appointments-page td .truncate,
+  .appointments-page th .truncate {
+    max-width: 120px;
+  }
 }
 
