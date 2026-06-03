@@ -30,6 +30,7 @@ A full-stack web application designed to modernize clinic appointment scheduling
 - Fetch and display appointments
 - Create new appointments via form
 - Real-time UI updates after creation
+- Responsive action menu in the Appointments table
 - API integration with backend
 
 ### Purpose of the Project
@@ -41,7 +42,7 @@ Many public clinics still rely on manual appointment booking methods, which ofte
 ### Backend:
 - .NET 8 Web API
 - Entity Framework Core
-- SQLite
+- SQLite (Will later migrate to SQLServer)
 - Clean Architecture
 - LINQ (advanced filtering, sorting, and pagination)
 
